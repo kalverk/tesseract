@@ -10,7 +10,7 @@ import javax.swing.JLabel;
 
 public class IntroUI {
 
-	public static void main(String[] args) {
+	public static void run() {
 		// TODO Auto-generated method stub
 
 		JFrame raam = new JFrame("Intro");
