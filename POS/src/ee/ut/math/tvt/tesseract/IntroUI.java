@@ -24,13 +24,17 @@ public class IntroUI {
 		}
 
 		JFrame raam = new JFrame("Intro");
-		raam.setSize(500, 250);
+		raam.setSize(500, 300);
 		raam.setLocation(100, 100);
 		Container sisu = raam.getContentPane();
 		sisu.setLayout(new GridLayout(0, 1));
 		JButton nupp = new JButton();
 
 		ImageIcon icon = new ImageIcon("logo.PNG");
+		JLabel t5 = new JLabel();	
+		t5.setIcon(icon);
+		sisu.add(t5);
+		
 		JLabel t1 = new JLabel();
 		t1.setText("Team name: " + prop.getProperty("teamname"));
 		sisu.add(t1);
@@ -49,9 +53,7 @@ public class IntroUI {
 				+ prop.getProperty("member3"));
 		sisu.add(t4);
 
-		JLabel t5 = new JLabel();
-		t5.setText("Team logo: ");
-		sisu.add(t5);
+		
 
 		JLabel t6 = new JLabel();
 		t6.setText("Version number: 0.0.0");
