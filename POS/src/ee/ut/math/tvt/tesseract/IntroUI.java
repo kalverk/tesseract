@@ -27,7 +27,7 @@ public class IntroUI {
 		
 
 		JLabel t2 = new JLabel();
-		t2.setText("Team leader: Kälver Kilvits");
+		t2.setText("Team leader: KÃ¤lver Kilvits");
 		sisu.add(t2);
 		
 		JLabel t3 = new JLabel();
@@ -35,7 +35,7 @@ public class IntroUI {
 		sisu.add(t3);
 		
 		JLabel t4 = new JLabel();
-		t4.setText("Team members: Kälver Kilvits, Karin Klooster, Markus Kängsepp, Kadi Laidoja");
+		t4.setText("Team members: KÃ¤lver Kilvits, Karin Klooster, Markus KÃ¤ngsepp, Kadi Laidoja");
 		sisu.add(t4);
 		
 
