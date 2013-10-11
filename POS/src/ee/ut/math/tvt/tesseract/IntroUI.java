@@ -15,9 +15,11 @@ public class IntroUI {
 
 	public static void run() {
 		Properties prop = new Properties();
+		Properties ver = new Properties();
 
 		try {
 			prop.load(new FileInputStream("application.properties"));
+			ver.load(new FileInputStream("version.properties"));
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -31,10 +33,10 @@ public class IntroUI {
 		JButton nupp = new JButton();
 
 		ImageIcon icon = new ImageIcon("logo.PNG");
-		JLabel t5 = new JLabel();	
+		JLabel t5 = new JLabel();
 		t5.setIcon(icon);
 		sisu.add(t5);
-		
+
 		JLabel t1 = new JLabel();
 		t1.setText("Team name: " + prop.getProperty("teamname"));
 		sisu.add(t1);
@@ -53,10 +55,10 @@ public class IntroUI {
 				+ prop.getProperty("member3"));
 		sisu.add(t4);
 
-		
-
 		JLabel t6 = new JLabel();
-		t6.setText("Version number: 0.0.0");
+		t6.setText("Version number: " + ver.getProperty("build.major.number")
+				+ "." + ver.getProperty("build.minor.number") + "."
+				+ ver.getProperty("build.revision.number"));
 		sisu.add(t6);
 
 		raam.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
