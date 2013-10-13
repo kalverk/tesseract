@@ -5,9 +5,7 @@ import java.awt.GridLayout;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
-
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
@@ -30,9 +28,8 @@ public class IntroUI {
 		raam.setLocation(100, 100);
 		Container sisu = raam.getContentPane();
 		sisu.setLayout(new GridLayout(0, 1));
-		JButton nupp = new JButton();
 
-		ImageIcon icon = new ImageIcon("logo.PNG");
+		ImageIcon icon = new ImageIcon(prop.getProperty("logo"));
 		JLabel t5 = new JLabel();
 		t5.setIcon(icon);
 		sisu.add(t5);
