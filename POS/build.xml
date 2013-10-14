@@ -68,6 +68,10 @@
 			            value="ee.ut.math.tvt.tesseract.Intro"/>
 			    </manifest>
 		</jar>
+		
+		<propertyfile file="version.properties">
+			<entry key="build.revision.number" type="int" operation="+" value="1" />
+		</propertyfile>
 
 	</target>
 
