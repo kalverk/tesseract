@@ -55,15 +55,14 @@
 	 for running your intro window. The name of the JAR file must be your team name. In addition, with every new JAR file build, your build.revision.number must 
 	 increase automatically by one and as a result build.number last part must also increase by one. -->
 	<target name="dist" description="Creates tesseract.jar">
-		<jar destfile="${build.dir}/jar/tesseract.jar">
-			<fileset dir="${basedir}" />
-
-		</jar>
+		<jar destfile="${build.dir}/jar/tesseract.jar" basedir="${basedir}" excludes="lib/**"  />
 
 	</target>
 
 	<!-- opens your intro window using the JAR file created by your dist ANT target -->
-	<target name="jrun" description="Run using tesseract.jar">
+	<target name="jrun" depends="build" description="Run using tesseract.jar">
+		   
+		
 
 	</target>
 
