@@ -52,17 +52,29 @@
 	</target>
 
 	<!-- creates in the folder build/jar a separate JAR file, that has all your created classes, two property files and other components that are required
-	 for running your intro window. The name of the JAR file must be your team name. In addition, with every new JAR file build, your build.revision.number must 
+	 for running your intro window. The name of the JAR file must be your team name. 
+	 
+	 In addition, with every new JAR file build, your build.revision.number must 
 	 increase automatically by one and as a result build.number last part must also increase by one. -->
+
+
 	<target name="dist" description="Creates tesseract.jar">
-		<jar destfile="${build.dir}/jar/tesseract.jar" basedir="${basedir}" excludes="lib/**"  />
+		<jar destfile="${build.dir}/jar/tesseract.jar">
+			<fileset dir="${build.dir}/classes" />
+			<fileset dir="${basedir}" includes="**/*.properties" />
+			<fileset dir="${basedir}" includes="**/*.PNG" />
+			<manifest>
+			      <attribute name="Main-Class"
+			            value="ee.ut.math.tvt.tesseract.Intro"/>
+			    </manifest>
+		</jar>
 
 	</target>
 
 	<!-- opens your intro window using the JAR file created by your dist ANT target -->
-	<target name="jrun" depends="build" description="Run using tesseract.jar">
-		   
-		
+	<target name="jrun" description="Run using tesseract.jar">
+
+		<java jar="${build.dir}/jar/tesseract.jar" classpathref="test.classpath" fork="yes" />
 
 	</target>
 
