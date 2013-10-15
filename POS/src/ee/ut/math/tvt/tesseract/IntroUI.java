@@ -1,27 +1,37 @@
 package ee.ut.math.tvt.tesseract;
 
+import org.apache.log4j.Logger;
+
 import java.awt.Container;
 import java.awt.GridLayout;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
+
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import org.apache.log4j.PropertyConfigurator;
+
 public class IntroUI {
+	private static final Logger log = Logger.getLogger(Intro.class);
 
 	public static void run() {
 		Properties prop = new Properties();
 		Properties ver = new Properties();
+		Properties props = new Properties();
 
 		try {
 			prop.load(new FileInputStream("application.properties"));
 			ver.load(new FileInputStream("version.properties"));
+			props.load(new FileInputStream("log4j.properties"));
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
+		PropertyConfigurator.configure(props);
+		log.info("Intro window is opened  ");
 
 		JFrame raam = new JFrame("Intro");
 		raam.setSize(500, 300);
