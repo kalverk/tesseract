@@ -61,6 +61,7 @@
 	<target name="dist" description="Creates tesseract.jar">
 		<jar destfile="${build.dir}/jar/tesseract.jar">
 			<fileset dir="${build.dir}/classes" />
+			<fileset dir="${basedir}/lib" />
 			<fileset dir="${basedir}" includes="**/*.properties" />
 			<fileset dir="${basedir}" includes="**/*.PNG" />
 			<manifest>
