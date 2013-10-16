@@ -25,7 +25,7 @@ public class IntroUI {
 		try {
 			prop.load(new FileInputStream("etc/application.properties"));
 			ver.load(new FileInputStream("etc/version.properties"));
-			props.load(new FileInputStream("etclog4j.properties"));
+			props.load(new FileInputStream("etc/log4j.properties"));
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
