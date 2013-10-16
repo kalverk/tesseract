@@ -23,9 +23,9 @@ public class IntroUI {
 		Properties props = new Properties();
 
 		try {
-			prop.load(new FileInputStream("application.properties"));
-			ver.load(new FileInputStream("version.properties"));
-			props.load(new FileInputStream("log4j.properties"));
+			prop.load(new FileInputStream("etc/application.properties"));
+			ver.load(new FileInputStream("etc/version.properties"));
+			props.load(new FileInputStream("etclog4j.properties"));
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
