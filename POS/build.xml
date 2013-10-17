@@ -62,15 +62,23 @@
 		<jar destfile="${build.dir}/jar/tesseract.jar">
 			<fileset dir="${build.dir}/classes" />
 			<fileset dir="${basedir}/lib" />
-			<fileset dir="${basedir}" includes="**/*.properties" />
-			<fileset dir="${basedir}" includes="**/*.PNG" />
+			<fileset dir="${basedir}/etc" />
+
+
+
 			<manifest>
-			      <attribute name="Main-Class"
-			            value="ee.ut.math.tvt.tesseract.Intro"/>
-			    </manifest>
+				<attribute name="Main-Class" value="ee.ut.math.tvt.tesseract.Intro" />
+				<attribute name="Class-Path" value="log4j-1.2.17.jar" />
+			</manifest>
 		</jar>
-		
-		<propertyfile file="version.properties">
+
+		<copy todir="build/jar">
+			<fileset dir="./lib">
+				<include name="**/*.jar" />
+			</fileset>
+		</copy>
+
+		<propertyfile file="etc/version.properties">
 			<entry key="build.revision.number" type="int" operation="+" value="1" />
 		</propertyfile>
 
@@ -79,7 +87,7 @@
 	<!-- opens your intro window using the JAR file created by your dist ANT target -->
 	<target name="jrun" description="Run using tesseract.jar">
 
-		<java jar="${build.dir}/jar/tesseract.jar" classpathref="test.classpath" fork="yes" />
+		<java jar="${build.dir}/jar/tesseract.jar" fork="yes" />
 
 	</target>
 
