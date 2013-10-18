@@ -16,6 +16,8 @@ import org.apache.log4j.PropertyConfigurator;
 
 public class IntroUI {
 	private static final Logger log = Logger.getLogger(Intro.class);
+	
+	public static JFrame raam;
 
 	public static void run() {
 		Properties prop = new Properties();
@@ -33,7 +35,7 @@ public class IntroUI {
 		PropertyConfigurator.configure(props);
 		log.info("Intro window is opened  ");
 
-		JFrame raam = new JFrame("Intro");
+		raam = new JFrame("Intro");
 		raam.setSize(500, 300);
 		raam.setLocation(100, 100);
 		Container sisu = raam.getContentPane();
