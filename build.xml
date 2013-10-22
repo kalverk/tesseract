@@ -39,7 +39,7 @@
 			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
 		</java>
 	</target>
-	
+
 	<target name="runc" depends="build" description="Run the application (console)">
 		<java classname="ee.ut.math.tvt.tesseract.Intro" classpathref="test.classpath" fork="yes">
 			<arg value="console" />
@@ -101,11 +101,11 @@
 
 	</target>
 
-	<!--git kaustas config failis:
+	<!-- on execution it should ask for a commit comment, 
+	make a commit to the local repository and push changes to the GitHub server
 	
-	remote origin: url= https://kasutaja:parool@github.com
-	
-	exec käsuga saab käsurea asju teha, args argumendid -->
+	git kaustas config failis:
+	remote origin: url= https://kasutaja:parool@github.com -->
 	<target name="git_commit" description="add, commit, push">
 		<input message="Tag message: " addproperty="git.tag.message" />
 		<exec executable="git">
@@ -122,5 +122,23 @@
 		</exec>
 	</target>
 
+	<!-- on execution it should ask for a tag name and comment.
+	 This target should create the corresponding tag and synchronize it with the GitHub. -->
+
+	<target name="git_tag" description="create tag and synchronize">
+		<input message="Tag name: " addproperty="git.tag.name" />
+		<input message="Tag comment: " addproperty="git.tag.comment" />
+		<exec executable="git">
+			<arg value="tag" />
+			<arg value="-a" />
+			<arg value="${git.tag.name}" />
+			<arg value="-m" />
+			<arg value="${git.tag.comment}" />
+		</exec>
+		<exec executable="git">
+			<arg value="push" />
+			<arg value="--tags" />
+		</exec>
+	</target>
 
 </project>
