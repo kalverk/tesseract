@@ -4,18 +4,24 @@ import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.model.SalesSystemTableModel;
+import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.NoSuchElementException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -35,7 +41,7 @@ public class PurchaseItemPanel extends JPanel {
 	// Text field on the dialogPane
 	private JTextField barCodeField;
 	private JTextField quantityField;
-	private JTextField nameField;
+	private JComboBox<String> nameField;
 	private JTextField priceField;
 
 	private JButton addItemButton;
@@ -86,22 +92,22 @@ public class PurchaseItemPanel extends JPanel {
 		panel.setLayout(new GridLayout(5, 2));
 		panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
-		// Initialize the textfields
-		barCodeField = new JTextField();
+		// Initialize the textfields/comboBox
+		barCodeField = new JTextField("");
 		quantityField = new JTextField("1");
-		nameField = new JTextField();
+		nameField = new JComboBox<String>(); // comboBox to select names.
 		priceField = new JTextField();
 
-		// Fill the dialog fields if the bar code text field loses focus
-		barCodeField.addFocusListener(new FocusListener() {
-			public void focusGained(FocusEvent e) {
-			}
+		// Fill the dialog fields if action is performed.
+		nameField.addActionListener(new ActionListener() {
 
-			public void focusLost(FocusEvent e) {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
 				fillDialogFields();
 			}
-		});
 
+		});
+		barCodeField.setEditable(false);
 		nameField.setEditable(false);
 		priceField.setEditable(false);
 
@@ -136,16 +142,43 @@ public class PurchaseItemPanel extends JPanel {
 		return panel;
 	}
 
+	public void addItemsToNameField() {
+		// reseting nameField
+		nameField.removeAllItems();
+		// filling nameField with items
+		java.util.List<StockItem> items = model.getWarehouseTableModel()
+				.getTableRows();
+		for (StockItem item : items) {
+			nameField.addItem(item.getName());
+		}
+	}
+
 	// Fill dialog with data from the "database".
 	public void fillDialogFields() {
-		StockItem stockItem = getStockItemByBarcode();
+		StockItem stockItem = getStockItemByName();
 
 		if (stockItem != null) {
-			nameField.setText(stockItem.getName());
+			barCodeField.setText(String.valueOf(stockItem.getId()));
 			String priceString = String.valueOf(stockItem.getPrice());
 			priceField.setText(priceString);
-		} else {
-			reset();
+		}
+	}
+
+	// Search the warehouse for a StockItem with the selected item from
+	// nameField
+	private StockItem getStockItemByName() {// muuta
+		try {
+			String itemName = (String) nameField.getSelectedItem();
+			if (itemName != null) {
+				return model.getWarehouseTableModel().getItemByName(itemName);
+
+			} else {
+				return null;
+			}
+		} catch (NumberFormatException ex) {
+			return null;
+		} catch (NoSuchElementException ex) {
+			return null;
 		}
 	}
 
@@ -202,16 +235,15 @@ public class PurchaseItemPanel extends JPanel {
 		this.addItemButton.setEnabled(enabled);
 		this.barCodeField.setEnabled(enabled);
 		this.quantityField.setEnabled(enabled);
+		this.nameField.setEnabled(enabled);
 	}
 
 	/**
 	 * Reset dialog fields.
 	 */
 	public void reset() {
-		barCodeField.setText("");
-		quantityField.setText("1");
-		nameField.setText("");
-		priceField.setText("");
+		addItemsToNameField();
+		fillDialogFields();
 	}
 
 	/*
