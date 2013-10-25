@@ -9,4 +9,9 @@ public interface DisplayableItem {
 	 * Id of entity.
 	 */
 	public Long getId();
+	
+	/**
+	 * Name of entity.
+	 */
+	public String getName();
 }
