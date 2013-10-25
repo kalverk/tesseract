@@ -93,7 +93,7 @@ public class PurchaseItemPanel extends JPanel {
 		panel.setBorder(BorderFactory.createTitledBorder("Product"));
 
 		// Initialize the textfields/comboBox
-		barCodeField = new JTextField("");
+		barCodeField = new JTextField();
 		quantityField = new JTextField("1");
 		nameField = new JComboBox<String>(); // comboBox to select names.
 		priceField = new JTextField();
@@ -102,8 +102,16 @@ public class PurchaseItemPanel extends JPanel {
 		nameField.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				fillDialogFields();
+			public void actionPerformed(ActionEvent e) {
+				if (nameField.getSelectedItem() != null) {
+					Object selected = nameField.getSelectedItem();
+					if (selected.toString().equals("")) {
+						barCodeField.setText("");
+						priceField.setText("");
+					} else {
+						fillDialogFields();
+					}
+				}
 			}
 
 		});
@@ -146,6 +154,7 @@ public class PurchaseItemPanel extends JPanel {
 		// reseting nameField
 		nameField.removeAllItems();
 		// filling nameField with items
+		nameField.addItem("");
 		java.util.List<StockItem> items = model.getWarehouseTableModel()
 				.getTableRows();
 		for (StockItem item : items) {
@@ -243,7 +252,10 @@ public class PurchaseItemPanel extends JPanel {
 	 */
 	public void reset() {
 		addItemsToNameField();
-		fillDialogFields();
+		barCodeField.setText("");
+		priceField.setText("");
+		quantityField.setText("1");
+
 	}
 
 	/*
