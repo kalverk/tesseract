@@ -13,10 +13,12 @@ public class Intro {
 	private static final String MODE = "console";
 
 	public static void main(String[] args) {
-
+		
 		final SalesDomainController domainController = new SalesDomainControllerImpl();
 
+
 		IntroUI.run();
+		
 
 		if (args.length == 1 && args[0].equals(MODE)) {
 			log.debug("Mode: " + MODE);
@@ -40,6 +42,7 @@ public class Intro {
 			}
 			introUI.raam.setVisible(false);
 		}
+
 
 	}
 
