@@ -16,7 +16,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 public class IntroUI {
 	private static final Logger log = Logger.getLogger(Intro.class);
-	
+
 	public static JFrame raam;
 
 	public static void run() {

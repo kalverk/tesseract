@@ -9,14 +9,15 @@ import javax.swing.JPanel;
  * labelled "History" in the menu).
  */
 public class HistoryTab {
-    
-    // TODO - implement!
 
-    public HistoryTab() {} 
-    
-    public Component draw() {
-        JPanel panel = new JPanel();
-        // TODO - Sales history tabel
-        return panel;
-    }
+	// TODO - implement!
+
+	public HistoryTab() {
+	}
+
+	public Component draw() {
+		JPanel panel = new JPanel();
+		// TODO - Sales history tabel
+		return panel;
+	}
 }

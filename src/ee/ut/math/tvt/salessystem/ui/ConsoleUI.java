@@ -69,10 +69,8 @@ public class ConsoleUI {
 	private void showStock(List<StockItem> stock) {
 		System.out.println("-------------------------");
 		for (StockItem si : stock) {
-			System.out.println(si.getId() + " "
-					+ si.getName() + " "
-					+ si.getPrice() + "Euro ("
-					+ si.getQuantity() + " items)");
+			System.out.println(si.getId() + " " + si.getName() + " "
+					+ si.getPrice() + "Euro (" + si.getQuantity() + " items)");
 		}
 		if (stock.size() == 0) {
 			System.out.println("\tNothing");
@@ -114,16 +112,17 @@ public class ConsoleUI {
 			showStock(cart);
 		else if (c[0].equals("p"))
 			try {
-			    List<SoldItem> soldItems = new ArrayList<SoldItem>();
-			    for(StockItem stockItem : cart) {
-			        soldItems.add(new SoldItem(stockItem, stockItem.getQuantity()));
-			    }
+				List<SoldItem> soldItems = new ArrayList<SoldItem>();
+				for (StockItem stockItem : cart) {
+					soldItems.add(new SoldItem(stockItem, stockItem
+							.getQuantity()));
+				}
 				dc.submitCurrentPurchase(soldItems);
 				cart.clear();
 			} catch (VerificationFailedException e) {
 				log.error(e.getMessage());
 			}
-		else if (c[0].equals("r")) 
+		else if (c[0].equals("r"))
 			try {
 				dc.cancelCurrentPurchase();
 				cart.clear();
@@ -138,5 +137,5 @@ public class ConsoleUI {
 			cart.add(item);
 		}
 	}
-	
+
 }

@@ -11,10 +11,11 @@ import ee.ut.math.tvt.salessystem.ui.SalesSystemUI;
 public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 	private static final long serialVersionUID = 1L;
 
-	private static final Logger log = Logger.getLogger(PurchaseInfoTableModel.class);
-	
+	private static final Logger log = Logger
+			.getLogger(PurchaseInfoTableModel.class);
+
 	public PurchaseInfoTableModel() {
-		super(new String[] { "Id", "Name", "Price", "Quantity"});
+		super(new String[] { "Id", "Name", "Price", "Quantity" });
 	}
 
 	@Override
@@ -51,18 +52,19 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 
 		return buffer.toString();
 	}
-	
-    /**
-     * Add new StockItem to table.
-     */
-    public void addItem(final SoldItem item) {
-        /**
-         * XXX In case such stockItem already exists increase the quantity of the
-         * existing stock.
-         */
-        
-        rows.add(item);
-        log.debug("Added " + item.getName() + " quantity of " + item.getQuantity());
-        fireTableDataChanged();
-    }
+
+	/**
+	 * Add new StockItem to table.
+	 */
+	public void addItem(final SoldItem item) {
+		/**
+		 * XXX In case such stockItem already exists increase the quantity of
+		 * the existing stock.
+		 */
+
+		rows.add(item);
+		log.debug("Added " + item.getName() + " quantity of "
+				+ item.getQuantity());
+		fireTableDataChanged();
+	}
 }
