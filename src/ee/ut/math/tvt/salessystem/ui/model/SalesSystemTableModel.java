@@ -29,6 +29,7 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
 	 *            item describing selected row
 	 * @param columnIndex
 	 *            selected column index
+	 * 
 	 * @return value displayed in column with specified index
 	 */
 	protected abstract Object getColumnValue(T item, int columnIndex);
