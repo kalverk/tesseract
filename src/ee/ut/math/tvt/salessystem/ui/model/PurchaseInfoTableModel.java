@@ -80,4 +80,12 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		buffer.append(sum);
 		return buffer.toString();
 	}
+	
+	public int total_quantity(){
+		int quantity_sum=0;
+		for (final SoldItem item : rows) {
+			quantity_sum+=item.getQuantity();
+		}
+		return quantity_sum;
+	}
 }

@@ -1,8 +1,12 @@
 package ee.ut.math.tvt.salessystem.ui.panels;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+
+import org.apache.log4j.Logger;
+
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
+import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
@@ -218,13 +222,15 @@ public class PurchaseItemPanel extends JPanel {
 				quantity = 1;
 			}
 			try {
-				if (stockItem.getQuantity() < quantity) {
+				if (stockItem.getQuantity()-model.getCurrentPurchaseTableModel().total_quantity() < quantity) {
+				
 					throw new VerificationFailedException("tt");
 				}
 
 				model.getCurrentPurchaseTableModel().addItem(
 						new SoldItem(stockItem, quantity));
-			} catch (Exception e) {
+			
+			} catch (VerificationFailedException e) {
 
 				JFrame raam = new JFrame();
 				raam.setSize(300, 300);
