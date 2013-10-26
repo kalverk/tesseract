@@ -222,14 +222,15 @@ public class PurchaseItemPanel extends JPanel {
 				quantity = 1;
 			}
 			try {
-				if (stockItem.getQuantity()-model.getCurrentPurchaseTableModel().total_quantity() < quantity) {
-				
+				if (stockItem.getQuantity()
+						- model.getCurrentPurchaseTableModel().total_quantity() < quantity) {
+
 					throw new VerificationFailedException("tt");
 				}
 
 				model.getCurrentPurchaseTableModel().addItem(
 						new SoldItem(stockItem, quantity));
-			
+
 			} catch (VerificationFailedException e) {
 
 				JFrame raam = new JFrame();
