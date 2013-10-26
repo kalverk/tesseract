@@ -85,8 +85,6 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 	public int total_quantity(StockItem item2) {
 		int quantity_sum = 0;
 		for (final SoldItem item : rows) {
-			System.out.println(item.getStockItem().getId());
-			System.out.println(item2.getId());
 			if (item.getStockItem().getId() == item2.getId()) {
 				quantity_sum += item.getQuantity();
 			}
