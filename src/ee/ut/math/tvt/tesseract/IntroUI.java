@@ -24,13 +24,30 @@ public class IntroUI {
 		Properties ver = new Properties();
 		Properties props = new Properties();
 
+		FileInputStream fi1=null;
+		FileInputStream fi2=null;
+		FileInputStream fi3=null;
+
 		try {
-			prop.load(new FileInputStream("etc/application.properties"));
-			ver.load(new FileInputStream("etc/version.properties"));
-			props.load(new FileInputStream("etc/log4j.properties"));
+			fi1 = new FileInputStream("etc/application.properties");
+			fi2 = new FileInputStream("etc/version.properties");
+			fi3 = new FileInputStream("etc/log4j.properties");
+			prop.load(fi1);
+			ver.load(fi2);
+			props.load(fi3);
 
 		} catch (IOException ex) {
-			ex.printStackTrace();
+			log.error(ex);
+		}
+		finally{
+			try{
+				fi1.close();
+				fi2.close();
+				fi3.close();
+			}
+			catch(Exception e){
+				log.error(e);
+			}
 		}
 		PropertyConfigurator.configure(props);
 		log.info("Intro window is opened  ");

@@ -1,18 +1,32 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -34,6 +48,15 @@ public class PurchaseTab {
 	private PurchaseItemPanel purchasePane;
 
 	private SalesSystemModel model;
+	
+	private JDialog dialog;
+	
+	private JTextField textField;
+	
+	private JTextField textField1;
+	
+	private double sum;
+	
 
 	public PurchaseTab(SalesDomainController controller, SalesSystemModel model) {
 		this.domainController = controller;
@@ -100,7 +123,7 @@ public class PurchaseTab {
 		JButton b = new JButton("Confirm");
 		b.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				submitPurchaseButtonClicked();
+				additionalScreen();
 			}
 		});
 		b.setEnabled(false);
@@ -151,6 +174,7 @@ public class PurchaseTab {
 
 	/** Event handler for the <code>submit purchase</code> event. */
 	protected void submitPurchaseButtonClicked() {
+		// Payment Accepted
 		log.info("Sale complete");
 		try {
 			log.debug("Contents of the current basket:\n"
@@ -228,8 +252,115 @@ public class PurchaseTab {
 		gc.weightx = 0;
 		gc.anchor = GridBagConstraints.CENTER;
 		gc.gridwidth = GridBagConstraints.RELATIVE;
-
 		return gc;
 	}
 
+	public void additionalScreen() {
+		dialog = new JDialog();
+		JPanel panel = new JPanel(new GridBagLayout());
+		panel.setBorder(BorderFactory.createTitledBorder("Confirmation required"));
+		
+		GridBagConstraints c=getConstraintsForPurchasePanel();
+		JLabel total = new JLabel("Total sum is: ");
+		getPurchaseSum();
+		JLabel total_sum = new JLabel(String.valueOf(sum));
+		panel.add(total);
+		panel.add(total_sum,c);
+		JLabel label = new JLabel("Payment amount: ");
+		panel.add(label,c);
+		textField = new JTextField(15);
+		panel.add(textField,c);
+		JLabel label1 = new JLabel("Change: ");
+		panel.add(label1,c);
+		textField1 = new JTextField(15);
+		textField1.setEditable(false);
+		panel.add(textField1,c);
+		
+		JButton accept = new JButton("Accept");
+		GridBagConstraints gc=getConstraintsForMenuButtons();
+		gc.insets = new Insets(10,0,0,0);
+		panel.add(accept,gc);
+		JButton cancel = new JButton("Cancel");
+		panel.add(cancel,gc);
+		
+		dialog.add(panel);
+		dialog.pack();
+		// dialog.setLocationRelativeTo(purchasePane);
+		dialog.setLocation(purchasePane.getLocationOnScreen());
+		dialog.setVisible(true);
+		accept.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// tee midagi kui accepted
+				submitPurchaseButtonClicked();
+				dialog.dispose();
+			}
+		});
+		cancel.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// tee midagi kui canceled
+				cancelPurchaseButtonClicked();
+				dialog.dispose();
+			}
+		});
+		textField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				try{
+					if (textField.getText().length()>0&&Double.parseDouble(textField.getText())>=0){
+						double input = Double.parseDouble(textField.getText());
+						return_money(input);
+					}
+					else{
+						textField1.setText("0.0");
+					}
+				} catch(NumberFormatException e){
+					//JOptionPane.showMessageDialog(purchasePane,"Invalid input. Please use numbers only!");
+					log.error(e);
+				}
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				try{
+					if (textField.getText().length()>0&&Double.parseDouble(textField.getText())>=0){
+						double input = Double.parseDouble(textField.getText());
+						return_money(input);
+					}
+				} catch(NumberFormatException e){
+					textField1.setText("ERROR");
+					JOptionPane.showMessageDialog(purchasePane,"Invalid input. Please use numbers only!");
+					log.error(e);
+				}
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				try{
+					if (textField.getText().length()>0&&Double.parseDouble(textField.getText())>=0){
+						double input = Double.parseDouble(textField.getText());
+						return_money(input);
+					}
+				} catch(NumberFormatException e){
+					textField1.setText("ERROR");
+					JOptionPane.showMessageDialog(purchasePane,"Invalid input. Please use numbers only!");
+					log.error(e);
+				}
+			}
+		});
+	}
+	private void return_money(double input){
+		double to_return = input-sum;
+		textField1.setText(String.valueOf(to_return));
+	}
+	
+	private void getPurchaseSum(){
+		sum=Double.parseDouble(model.getCurrentPurchaseTableModel().total_sum());
+	}
+	
+	
 }

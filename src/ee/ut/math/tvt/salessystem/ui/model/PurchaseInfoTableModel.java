@@ -70,4 +70,14 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 				+ item.getQuantity());
 		fireTableDataChanged();
 	}
+	
+	public String total_sum(){
+		final StringBuffer buffer = new StringBuffer();
+		double sum = 0;
+		for (final SoldItem item : rows) {
+			sum+=item.getSum();
+		}
+		buffer.append(sum);
+		return buffer.toString();
+	}
 }
