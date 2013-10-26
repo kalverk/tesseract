@@ -223,7 +223,8 @@ public class PurchaseItemPanel extends JPanel {
 			}
 			try {
 				if (stockItem.getQuantity()
-						- model.getCurrentPurchaseTableModel().total_quantity() < quantity) {
+						- model.getCurrentPurchaseTableModel().total_quantity(
+								stockItem) < quantity) {
 
 					throw new VerificationFailedException("tt");
 				}

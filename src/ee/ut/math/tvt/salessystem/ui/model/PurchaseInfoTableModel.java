@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.ui.model;
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.SalesSystemUI;
 
 /**
@@ -70,21 +71,25 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 				+ item.getQuantity());
 		fireTableDataChanged();
 	}
-	
-	public String total_sum(){
+
+	public String total_sum() {
 		final StringBuffer buffer = new StringBuffer();
 		double sum = 0;
 		for (final SoldItem item : rows) {
-			sum+=item.getSum();
+			sum += item.getSum();
 		}
 		buffer.append(sum);
 		return buffer.toString();
 	}
-	
-	public int total_quantity(){
-		int quantity_sum=0;
+
+	public int total_quantity(StockItem item2) {
+		int quantity_sum = 0;
 		for (final SoldItem item : rows) {
-			quantity_sum+=item.getQuantity();
+			System.out.println(item.getStockItem().getId());
+			System.out.println(item2.getId());
+			if (item.getStockItem().getId() == item2.getId()) {
+				quantity_sum += item.getQuantity();
+			}
 		}
 		return quantity_sum;
 	}
