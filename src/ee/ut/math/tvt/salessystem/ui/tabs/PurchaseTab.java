@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.data.AcceptOrder;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
@@ -15,6 +16,9 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -182,10 +186,20 @@ public class PurchaseTab {
 			domainController.submitCurrentPurchase(model
 					.getCurrentPurchaseTableModel().getTableRows());
 			endSale();
+			savePurchase();
 			model.getCurrentPurchaseTableModel().clear();
 		} catch (VerificationFailedException e1) {
 			log.error(e1.getMessage());
 		}
+	}
+	
+	protected void savePurchase(){
+		AcceptOrder order = new AcceptOrder(
+			model.getCurrentPurchaseTableModel().getTableRows(),
+			((DateFormat)new SimpleDateFormat("yyyy/MM/dd")).format(Calendar.getInstance().getTime()),
+			((DateFormat)new SimpleDateFormat("HH:mm:ss")).format(Calendar.getInstance().getTime()),
+			"");
+		model.getWarehouseTableModel().decreaseItemsQuantity(order.getSoldItems());
 	}
 
 	/*
@@ -319,7 +333,6 @@ public class PurchaseTab {
 						textField1.setText("0.0");
 					}
 				} catch(NumberFormatException e){
-					//JOptionPane.showMessageDialog(purchasePane,"Invalid input. Please use numbers only!");
 					log.error(e);
 				}
 			}
@@ -355,7 +368,7 @@ public class PurchaseTab {
 	}
 	private void return_money(double input){
 		double to_return = input-sum;
-		textField1.setText(String.valueOf(to_return));
+		textField1.setText(String.valueOf(Math.round(to_return*100.0)/100.0));
 	}
 	
 	private void getPurchaseSum(){

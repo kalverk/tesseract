@@ -18,7 +18,7 @@ public class SalesSystemModel {
 	private PurchaseInfoTableModel currentPurchaseTableModel;
 
 	private final SalesDomainController domainController;
-
+	
 	/**
 	 * Construct application model.
 	 * 
@@ -30,7 +30,6 @@ public class SalesSystemModel {
 
 		warehouseTableModel = new StockTableModel();
 		currentPurchaseTableModel = new PurchaseInfoTableModel();
-
 		// populate stock model with data from the warehouse
 		warehouseTableModel.populateWithData(domainController
 				.loadWarehouseState());
