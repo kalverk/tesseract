@@ -14,14 +14,12 @@ public class AcceptOrder implements DisplayableItem {
 
 	private final String time;
 
-	private final String name;
 
-	public AcceptOrder(List<SoldItem> solditems, String date, String time,
-			String name) {
+	public AcceptOrder(List<SoldItem> solditems, String date, String time
+			) {
 		this.solditems = solditems;
 		this.date = date;
 		this.time = time;
-		this.name = name;
 		this.id = ID;
 		ID += 1;
 	}
@@ -36,7 +34,7 @@ public class AcceptOrder implements DisplayableItem {
 	}
 
 	public String getName() {
-		return name;
+		return null;
 	}
 
 	public String getDate() {

@@ -11,10 +11,12 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
 
 import org.apache.log4j.Logger;
 
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
@@ -74,7 +76,7 @@ public class HistoryTab {
 		return panel;
 	}
 
-	// warehouse menu
+	// history menu
 	private Component drawHistoryMenuPane() {
 		JPanel panel = new JPanel();
 
@@ -93,7 +95,7 @@ public class HistoryTab {
 		return panel;
 	}
 
-	// table of the wareshouse stock
+	// table of history
 	private Component drawHistoryMainPane() {
 		JPanel panel = new JPanel();
 
@@ -112,8 +114,8 @@ public class HistoryTab {
 
 		panel.setLayout(gb);
 		panel.add(scrollPane, gc);
-
 		panel.setBorder(BorderFactory.createTitledBorder("Accepted orders"));
 		return panel;
 	}
+
 }

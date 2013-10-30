@@ -1,11 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
-import java.util.List;
-import java.util.NoSuchElementException;
 import org.apache.log4j.Logger;
 import ee.ut.math.tvt.salessystem.domain.data.AcceptOrder;
-import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
-import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
 /**
  * History item table model.
@@ -17,6 +13,13 @@ public class HistoryTableModel extends SalesSystemTableModel<AcceptOrder> {
 
 	public HistoryTableModel() {
 		super(new String[] { "Id", "Date", "Time", "Total" });
+	}
+
+	public void addItem(final AcceptOrder order) {
+
+		rows.add(order);
+		fireTableDataChanged();
+
 	}
 
 	@Override
