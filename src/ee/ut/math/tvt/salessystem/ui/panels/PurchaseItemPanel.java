@@ -10,6 +10,7 @@ import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
+import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -40,6 +41,8 @@ import javax.swing.JTextField;
  */
 public class PurchaseItemPanel extends JPanel {
 
+	private static final Logger log = Logger.getLogger(PurchaseItemPanel.class);
+
 	private static final long serialVersionUID = 1L;
 
 	// Text field on the dialogPane
@@ -49,6 +52,7 @@ public class PurchaseItemPanel extends JPanel {
 	private JTextField priceField;
 
 	private JButton addItemButton;
+	private PurchaseItemPanel purchasePane;
 
 	// Warehouse model
 	private SalesSystemModel model;
@@ -218,7 +222,15 @@ public class PurchaseItemPanel extends JPanel {
 			int quantity;
 			try {
 				quantity = Integer.parseInt(quantityField.getText());
+				if (quantity <= 0) {
+					throw new NumberFormatException();
+
+				}
 			} catch (NumberFormatException ex) {
+				JOptionPane
+						.showMessageDialog(purchasePane,
+								"Invalid input on amount field. Please use positive numbers only!");
+				log.error(ex);
 				quantity = 1;
 			}
 			try {
@@ -226,7 +238,7 @@ public class PurchaseItemPanel extends JPanel {
 						- model.getCurrentPurchaseTableModel().total_quantity(
 								stockItem) < quantity) {
 
-					throw new VerificationFailedException("tt");
+					throw new VerificationFailedException("not enough items");
 				}
 
 				model.getCurrentPurchaseTableModel().addItem(
@@ -239,6 +251,7 @@ public class PurchaseItemPanel extends JPanel {
 				raam.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				JOptionPane.showMessageDialog(raam,
 						"Warehouse doesn't have enough items!");
+				log.error(e);
 				raam.setVisible(false);
 			}
 		}
