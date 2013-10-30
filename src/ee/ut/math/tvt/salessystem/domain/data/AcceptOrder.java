@@ -2,7 +2,7 @@ package ee.ut.math.tvt.salessystem.domain.data;
 
 import java.util.List;
 
-public class AcceptOrder implements DisplayableItem{
+public class AcceptOrder implements DisplayableItem {
 
 	private static long ID = 1;
 
@@ -13,10 +13,11 @@ public class AcceptOrder implements DisplayableItem{
 	private final String date;
 
 	private final String time;
-	
+
 	private final String name;
 
-	public AcceptOrder(List<SoldItem> solditems, String date, String time, String name) {
+	public AcceptOrder(List<SoldItem> solditems, String date, String time,
+			String name) {
 		this.solditems = solditems;
 		this.date = date;
 		this.time = time;
@@ -33,8 +34,8 @@ public class AcceptOrder implements DisplayableItem{
 	public List<SoldItem> getSoldItems() {
 		return solditems;
 	}
-	
-	public String getName(){
+
+	public String getName() {
 		return name;
 	}
 
