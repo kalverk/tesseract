@@ -1,6 +1,10 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
+
 import ee.ut.math.tvt.salessystem.domain.data.AcceptOrder;
 
 /**
@@ -11,15 +15,20 @@ public class HistoryTableModel extends SalesSystemTableModel<AcceptOrder> {
 
 	private static final Logger log = Logger.getLogger(StockTableModel.class);
 
+	private final List<AcceptOrder> orders = new ArrayList<>();
 	public HistoryTableModel() {
 		super(new String[] { "Id", "Date", "Time", "Total" });
 	}
 
 	public void addItem(final AcceptOrder order) {
-
+		orders.add(order);
 		rows.add(order);
 		fireTableDataChanged();
 
+	}
+	
+	public AcceptOrder getOrder(int row){
+		return orders.get(row);
 	}
 
 	@Override

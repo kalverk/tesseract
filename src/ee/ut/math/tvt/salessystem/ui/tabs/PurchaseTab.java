@@ -48,18 +48,23 @@ public class PurchaseTab {
 	private JButton submitPurchase;
 
 	private JButton cancelPurchase;
-
+	
+	private JButton accept;
+	
+	private JButton cancel;
+	
 	private PurchaseItemPanel purchasePane;
 
 	private SalesSystemModel model;
-
+	
 	private JDialog dialog;
-
+	
 	private JTextField textField;
-
+	
 	private JTextField textField1;
-
+	
 	private double sum;
+	
 
 	public PurchaseTab(SalesDomainController controller, SalesSystemModel model) {
 		this.domainController = controller;
@@ -146,6 +151,87 @@ public class PurchaseTab {
 
 		return b;
 	}
+	
+	private JButton acceptPaymentButton(){
+		JButton b = new JButton("Accept");
+		b.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// tee midagi kui accepted
+				submitPurchaseButtonClicked();
+				dialog.dispose();
+			}
+		});
+		b.setEnabled(false);
+		return b;
+	}
+	
+	private JButton cancelPaymentButton(){
+		JButton b = new JButton("Cancel");
+		b.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// tee midagi kui accepted
+				cancelPurchaseButtonClicked();
+				dialog.dispose();
+			}
+		});
+		b.setEnabled(false);
+		return b;
+	}
+	
+	private JTextField displayInputField(){
+		textField = new JTextField(15);
+			textField.getDocument().addDocumentListener(new DocumentListener() {
+			
+			@Override
+			public void removeUpdate(DocumentEvent arg0) {
+				try{
+					if (textField.getText().length()>0&&Double.parseDouble(textField.getText())>=0){
+						double input = Double.parseDouble(textField.getText());
+						return_money(input);
+					}
+					else{
+						textField1.setText("0.0");
+					}
+				} catch(NumberFormatException e){
+					//JOptionPane.showMessageDialog(purchasePane,"Invalid input. Please use numbers only!");
+					log.error(e);
+				}
+			}
+			
+			@Override
+			public void insertUpdate(DocumentEvent arg0) {
+				try{
+					if (textField.getText().length()>0&&Double.parseDouble(textField.getText())>=0){
+						double input = Double.parseDouble(textField.getText());
+						return_money(input);
+					}
+				} catch(NumberFormatException e){
+					textField1.setText("ERROR");
+					JOptionPane.showMessageDialog(purchasePane,"Invalid input. Please use numbers only!");
+					log.error(e);
+				}
+			}
+			
+			@Override
+			public void changedUpdate(DocumentEvent arg0) {
+				try{
+					if (textField.getText().length()>0&&Double.parseDouble(textField.getText())>=0){
+						double input = Double.parseDouble(textField.getText());
+						return_money(input);
+					}
+				} catch(NumberFormatException e){
+					textField1.setText("ERROR");
+					JOptionPane.showMessageDialog(purchasePane,"Invalid input. Please use numbers only!");
+					log.error(e);
+				}
+			}
+		});
+		return textField;
+	}
 
 	/*
 	 * === Event handlers for the menu buttons (get executed when the buttons
@@ -191,7 +277,7 @@ public class PurchaseTab {
 			log.error(e1.getMessage());
 		}
 	}
-
+	
 	protected void savePurchase() {
 		AcceptOrder order = new AcceptOrder(model
 				.getCurrentPurchaseTableModel().getTableRows(),
@@ -202,7 +288,6 @@ public class PurchaseTab {
 		model.getWarehouseTableModel().decreaseItemsQuantity(
 				order.getSoldItems());
 		model.getHistoryTableModel().addItem(order);
-
 	}
 
 	/*
@@ -228,6 +313,20 @@ public class PurchaseTab {
 		submitPurchase.setEnabled(false);
 		newPurchase.setEnabled(true);
 		purchasePane.setEnabled(false);
+	}
+	
+	private void saleOK(){
+		purchasePane.reset();
+		
+		accept.setEnabled(true);
+		cancel.setEnabled(true);
+	}
+	
+	private void saleNotOK(){
+		purchasePane.reset();
+		
+		accept.setEnabled(false);
+		cancel.setEnabled(true);
 	}
 
 	/*
@@ -275,115 +374,49 @@ public class PurchaseTab {
 	public void additionalScreen() {
 		dialog = new JDialog();
 		JPanel panel = new JPanel(new GridBagLayout());
-		panel.setBorder(BorderFactory
-				.createTitledBorder("Confirmation required"));
-
-		GridBagConstraints c = getConstraintsForPurchasePanel();
+		panel.setBorder(BorderFactory.createTitledBorder("Confirmation required"));
+		
+		GridBagConstraints c=getConstraintsForPurchasePanel();
 		JLabel total = new JLabel("Total sum is: ");
 		getPurchaseSum();
 		JLabel total_sum = new JLabel(String.valueOf(sum));
 		panel.add(total);
-		panel.add(total_sum, c);
+		panel.add(total_sum,c);
 		JLabel label = new JLabel("Payment amount: ");
-		panel.add(label, c);
-		textField = new JTextField(15);
-		panel.add(textField, c);
+		panel.add(label,c);
+		textField = displayInputField();
+		panel.add(textField,c);
 		JLabel label1 = new JLabel("Change: ");
-		panel.add(label1, c);
+		panel.add(label1,c);
 		textField1 = new JTextField(15);
 		textField1.setEditable(false);
-		panel.add(textField1, c);
-
-		JButton accept = new JButton("Accept");
-		GridBagConstraints gc = getConstraintsForMenuButtons();
-		gc.insets = new Insets(10, 0, 0, 0);
-		panel.add(accept, gc);
-		JButton cancel = new JButton("Cancel");
-		panel.add(cancel, gc);
-
+		panel.add(textField1,c);
+		
+		accept = acceptPaymentButton();
+		GridBagConstraints gc=getConstraintsForMenuButtons();
+		gc.insets = new Insets(10,0,0,0);
+		panel.add(accept,gc);
+		cancel = cancelPaymentButton();
+		panel.add(cancel,gc);
+		saleNotOK();
+		
 		dialog.add(panel);
 		dialog.pack();
-		// dialog.setLocationRelativeTo(purchasePane);
 		dialog.setLocation(purchasePane.getLocationOnScreen());
 		dialog.setVisible(true);
-		accept.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// tee midagi kui accepted
-				submitPurchaseButtonClicked();
-				dialog.dispose();
-			}
-		});
-		cancel.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// tee midagi kui canceled
-				cancelPurchaseButtonClicked();
-				dialog.dispose();
-			}
-		});
-		textField.getDocument().addDocumentListener(new DocumentListener() {
-
-			@Override
-			public void removeUpdate(DocumentEvent arg0) {
-				try {
-					if (textField.getText().length() > 0
-							&& Double.parseDouble(textField.getText()) >= 0) {
-						double input = Double.parseDouble(textField.getText());
-						return_money(input);
-					} else {
-						textField1.setText("0.0");
-					}
-				} catch (NumberFormatException e) {
-					log.error(e);
-				}
-			}
-
-			@Override
-			public void insertUpdate(DocumentEvent arg0) {
-				try {
-					if (textField.getText().length() > 0
-							&& Double.parseDouble(textField.getText()) >= 0) {
-						double input = Double.parseDouble(textField.getText());
-						return_money(input);
-					}
-				} catch (NumberFormatException e) {
-					textField1.setText("ERROR");
-					JOptionPane.showMessageDialog(purchasePane,
-							"Invalid input. Please use numbers only!");
-					log.error(e);
-				}
-			}
-
-			@Override
-			public void changedUpdate(DocumentEvent arg0) {
-				try {
-					if (textField.getText().length() > 0
-							&& Double.parseDouble(textField.getText()) >= 0) {
-						double input = Double.parseDouble(textField.getText());
-						return_money(input);
-					}
-				} catch (NumberFormatException e) {
-					textField1.setText("ERROR");
-					JOptionPane.showMessageDialog(purchasePane,
-							"Invalid input. Please use numbers only!");
-					log.error(e);
-				}
-			}
-		});
 	}
-
-	private void return_money(double input) {
-		double to_return = input - sum;
-		textField1
-				.setText(String.valueOf(Math.round(to_return * 100.0) / 100.0));
+	private void return_money(double input){
+		double to_return = input-sum;
+		if (to_return>=0){
+			saleOK();
+		}
+		else{
+			saleNotOK();
+		}
+		textField1.setText(String.valueOf(Math.round(to_return*100.0)/100.0));
 	}
-
-	private void getPurchaseSum() {
-		sum = Double.parseDouble(model.getCurrentPurchaseTableModel()
-				.total_sum());
+	
+	private void getPurchaseSum(){
+		sum=Double.parseDouble(model.getCurrentPurchaseTableModel().total_sum());
 	}
-
 }
