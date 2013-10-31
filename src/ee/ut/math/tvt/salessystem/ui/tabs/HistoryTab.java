@@ -171,23 +171,25 @@ public class HistoryTab {
 	
 	private JTable populateTable(AcceptOrder order){
 		List<SoldItem> soldItems = order.getSoldItems();
-		
-		String[] columnNames = {"Item name", "Amount", "Price per piece", "Total sum"};
-		Vector data = new Vector();
+
+		Vector<String> columnNames = new Vector<String>();
+		columnNames.addElement("Item name");
+		columnNames.addElement("Amount");
+		columnNames.addElement("PPE");
+		columnNames.addElement("Total sum");
+
+		Vector<Vector> data = new Vector<Vector>();
+		data.addElement(columnNames);
 		for (SoldItem item:soldItems){
-			String itemName = item.getName() + "\n";
-			String itemAmount = item.getQuantity() + "\n";
-			String itemPPP = item.getPrice() + "\n";
-			String itemTotalSum = item.getSum() + "\n";
-			data.add(new Vector(Arrays.asList(itemName)));
-			data.add(new Vector(Arrays.asList(itemAmount)));
-			data.add(new Vector(Arrays.asList(itemPPP)));
-			data.add(new Vector(Arrays.asList(itemTotalSum)));
+			Vector<String> row = new Vector<String>();
+			row.addElement(item.getName());
+			row.addElement(String.valueOf(item.getQuantity()));
+			row.addElement(String.valueOf(item.getPrice()));
+			row.addElement(String.valueOf(item.getSum()));
+			data.addElement(row);
 		}
 		
-		Vector columnName = new Vector<>(Arrays.asList(columnNames));
-		
-		JTable table = new JTable (data, columnName);
+		JTable table = new JTable (data, columnNames);
 		
 		return table;
 	}

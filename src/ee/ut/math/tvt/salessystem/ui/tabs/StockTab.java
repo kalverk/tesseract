@@ -15,6 +15,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -96,6 +97,7 @@ public class StockTab {
 	}
 
 	private boolean createItemInfoOption() {
+		
 		JFrame frame = new JFrame();
 		frame.setSize(600, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -139,11 +141,13 @@ public class StockTab {
 					JOptionPane.QUESTION_MESSAGE, null, null, null);
 
 			if (result == 0) {
+				
 				if (checkBlank(idField, true) && checkBlank(nameField, false)
 						&& checkBlank(descField, false)
 						&& checkBlank(priceField, true)
-						&& checkBlank(amountField, true)) {// add values to item
-															// info variables
+						&& checkBlank(amountField, true)
+						&& isThisIdAvailable()) {// add values to item
+												// info variables
 					id = (long) (Double.parseDouble(idField.getText()));
 					// did it that way because in checkBlank() is only checked
 					// if Number is double. So if You write Double in Bar code
@@ -152,7 +156,7 @@ public class StockTab {
 					desc = descField.getText();
 					price = Double.parseDouble(priceField.getText());
 					amount = (int) (Double.parseDouble(amountField.getText()));
-
+					//To add ID has to be available or price,name and id should match
 					return true;
 				} else {
 					createWarning(warningInfo);
@@ -163,6 +167,25 @@ public class StockTab {
 			}
 		}
 
+	}
+	
+	private boolean isThisIdAvailable(){
+		try{
+			StockItem item = model.getWarehouseTableModel().getItemById(Long.parseLong(idField.getText()));
+			if(Long.parseLong(idField.getText())==item.getId()&&
+					nameField.getText().equalsIgnoreCase(item.getName())&&
+					Double.parseDouble(priceField.getText())==item.getPrice()){
+				return true;
+			}
+			else{
+				warningInfo="This Id is occupied with another product. Try different Id.";
+				return false;
+			}
+		}catch(NoSuchElementException e){
+			//Means there is no such ID in warehouse we can occupy this ID.
+			log.debug(e);
+			return true;
+		}
 	}
 
 	private boolean checkBlank(JTextField blank, boolean ifNumber) {// checks if
