@@ -12,6 +12,7 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -39,25 +40,6 @@ public class HistoryTab {
 			.getLogger(PurchaseInfoTableModel.class);
 	private final SalesSystemModel model;
 
-	// AcceptOrder variables
-	private long id;
-	private String date;
-	private String time;
-	private double total;
-
-	// JTextFields for item info
-	private JTextField idField;
-	private JTextField dateField;
-	private JTextField timeField;
-	private JTextField totalField;
-
-	// JTextLabels for item info
-
-	private JLabel idLabel;
-	private JLabel dateLabel;
-	private JLabel timeLabel;
-	private JLabel totalLabel;
-			
 	public HistoryTab(SalesSystemModel model) {
 		this.model = model;
 	}
@@ -103,36 +85,40 @@ public class HistoryTab {
 		panel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
 		return panel;
 	}
-	
 
 	// table of history
 	private Component drawHistoryMainPane() {
 		final JPanel panel = new JPanel();
 
 		final JTable table = new JTable(model.getHistoryTableModel());
-		
+
 		table.addMouseListener(new MouseListener() {
-			
+
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				if(SwingUtilities.isLeftMouseButton(e)){
+				if (SwingUtilities.isLeftMouseButton(e)) {
 					int row = table.getSelectedRow();
-					AcceptOrder order = model.getHistoryTableModel().getOrder(row);
+					AcceptOrder order = model.getHistoryTableModel().getOrder(
+							row);
 					JDialog dialog = populateDetailedInfoWindow(order);
-				}	
+				}
 			}
+
 			@Override
 			public void mousePressed(MouseEvent e) {
-				// TODO Auto-generated method stub	
+				// TODO Auto-generated method stub
 			}
+
 			@Override
 			public void mouseExited(MouseEvent e) {
 				// TODO Auto-generated method stub
 			}
+
 			@Override
 			public void mouseEntered(MouseEvent e) {
 				// TODO Auto-generated method stub
 			}
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// TODO Auto-generated method stub
@@ -155,32 +141,34 @@ public class HistoryTab {
 		panel.setBorder(BorderFactory.createTitledBorder("Accepted orders"));
 		return panel;
 	}
-	
-	private JDialog populateDetailedInfoWindow(AcceptOrder order){
-		JDialog dialog = new JDialog();
+
+	private JDialog populateDetailedInfoWindow(AcceptOrder order) {
+		JFrame frame = new JFrame();
+		JDialog dialog = new JDialog(frame, "Order details");
 		JPanel panel = new JPanel(new GridBagLayout());
 		JTable itemInfo = populateTable(order);
-		panel.setBorder(BorderFactory.createTitledBorder("Detailes of order nr: " + order.getId()));
-		panel.add(itemInfo);
+		panel.add(new JScrollPane(itemInfo));
+		panel.setBorder(BorderFactory
+				.createTitledBorder("Details of order nr: " + order.getId()));
+		panel.add(itemInfo.getTableHeader());
 		dialog.add(panel);
 		dialog.pack();
 		dialog.setLocationRelativeTo(panel);
 		dialog.setVisible(true);
 		return dialog;
 	}
-	
-	private JTable populateTable(AcceptOrder order){
+
+	private JTable populateTable(AcceptOrder order) {
 		List<SoldItem> soldItems = order.getSoldItems();
 
 		Vector<String> columnNames = new Vector<String>();
 		columnNames.addElement("Item name");
 		columnNames.addElement("Amount");
-		columnNames.addElement("PPE");
+		columnNames.addElement("Unit price");
 		columnNames.addElement("Total sum");
 
 		Vector<Vector> data = new Vector<Vector>();
-		data.addElement(columnNames);
-		for (SoldItem item:soldItems){
+		for (SoldItem item : soldItems) {
 			Vector<String> row = new Vector<String>();
 			row.addElement(item.getName());
 			row.addElement(String.valueOf(item.getQuantity()));
@@ -188,9 +176,9 @@ public class HistoryTab {
 			row.addElement(String.valueOf(item.getSum()));
 			data.addElement(row);
 		}
-		
-		JTable table = new JTable (data, columnNames);
-		
+
+		JTable table = new JTable(data, columnNames);
+
 		return table;
 	}
 

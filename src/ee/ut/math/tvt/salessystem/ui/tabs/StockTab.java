@@ -80,7 +80,7 @@ public class StockTab {
 	}
 
 	protected void AddItemButtonClicked() {
-		log.info("Adding new item.");
+		log.info("Adding new item");
 		AddItem();
 	}
 
@@ -90,6 +90,7 @@ public class StockTab {
 										// items fill be added.
 			StockItem stockItem = new StockItem(id, name, desc, price, amount);
 			model.getWarehouseTableModel().addItem(stockItem);
+			log.info("New item added");
 		} else {
 			return;
 		}
@@ -97,7 +98,7 @@ public class StockTab {
 	}
 
 	private boolean createItemInfoOption() {
-		
+
 		JFrame frame = new JFrame();
 		frame.setSize(600, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -141,22 +142,27 @@ public class StockTab {
 					JOptionPane.QUESTION_MESSAGE, null, null, null);
 
 			if (result == 0) {
-				
+
 				if (checkBlank(idField, true) && checkBlank(nameField, false)
 						&& checkBlank(descField, false)
 						&& checkBlank(priceField, true)
-						&& checkBlank(amountField, true)
-						&& isThisIdAvailable()) {// add values to item
-												// info variables
+						&& checkBlank(amountField, true) && isThisIdAvailable()) {// add
+																					// values
+																					// to
+																					// item
+																					// info
+																					// variables
 					id = (long) (Double.parseDouble(idField.getText()));
 					// did it that way because in checkBlank() is only checked
 					// if Number is double. So if You write Double in Bar code
 					// field program would automatically convert it into Long.
 					name = nameField.getText();
 					desc = descField.getText();
-					price = Double.parseDouble(priceField.getText());
+					price = Math
+							.round((Double.parseDouble(priceField.getText()) * 100.0)) / 100.0;
 					amount = (int) (Double.parseDouble(amountField.getText()));
-					//To add ID has to be available or price,name and id should match
+					// To add ID has to be available or price,name and id should
+					// match
 					return true;
 				} else {
 					createWarning(warningInfo);
@@ -168,21 +174,22 @@ public class StockTab {
 		}
 
 	}
-	
-	private boolean isThisIdAvailable(){
-		try{
-			StockItem item = model.getWarehouseTableModel().getItemById(Long.parseLong(idField.getText()));
-			if(Long.parseLong(idField.getText())==item.getId()&&
-					nameField.getText().equalsIgnoreCase(item.getName())&&
-					Double.parseDouble(priceField.getText())==item.getPrice()){
+
+	private boolean isThisIdAvailable() {
+		try {
+			StockItem item = model.getWarehouseTableModel().getItemById(
+					(long) (Double.parseDouble(idField.getText())));
+			if (Long.parseLong(idField.getText()) == item.getId()
+					&& nameField.getText().equalsIgnoreCase(item.getName())
+					&& Double.parseDouble(priceField.getText()) == item
+							.getPrice()) {
 				return true;
-			}
-			else{
-				warningInfo="This Id is occupied with another product. Try different Id.";
+			} else {
+				warningInfo = "This Id is occupied with another product. Try different Id.";
 				return false;
 			}
-		}catch(NoSuchElementException e){
-			//Means there is no such ID in warehouse we can occupy this ID.
+		} catch (NoSuchElementException e) {
+			// Means there is no such ID in warehouse we can occupy this ID.
 			log.debug(e);
 			return true;
 		}

@@ -48,23 +48,22 @@ public class PurchaseTab {
 	private JButton submitPurchase;
 
 	private JButton cancelPurchase;
-	
+
 	private JButton accept;
-	
+
 	private JButton cancel;
-	
+
 	private PurchaseItemPanel purchasePane;
 
 	private SalesSystemModel model;
-	
+
 	private JDialog dialog;
-	
+
 	private JTextField textField;
-	
+
 	private JTextField textField1;
-	
+
 	private double sum;
-	
 
 	public PurchaseTab(SalesDomainController controller, SalesSystemModel model) {
 		this.domainController = controller;
@@ -151,8 +150,8 @@ public class PurchaseTab {
 
 		return b;
 	}
-	
-	private JButton acceptPaymentButton(){
+
+	private JButton acceptPaymentButton() {
 		JButton b = new JButton("Accept");
 		b.addActionListener(new ActionListener() {
 
@@ -166,8 +165,8 @@ public class PurchaseTab {
 		b.setEnabled(false);
 		return b;
 	}
-	
-	private JButton cancelPaymentButton(){
+
+	private JButton cancelPaymentButton() {
 		JButton b = new JButton("Cancel");
 		b.addActionListener(new ActionListener() {
 
@@ -181,51 +180,55 @@ public class PurchaseTab {
 		b.setEnabled(false);
 		return b;
 	}
-	
-	private JTextField displayInputField(){
+
+	private JTextField displayInputField() {
 		textField = new JTextField(15);
-			textField.getDocument().addDocumentListener(new DocumentListener() {
-			
+		textField.getDocument().addDocumentListener(new DocumentListener() {
+
 			@Override
 			public void removeUpdate(DocumentEvent arg0) {
-				try{
-					if (textField.getText().length()>0&&Double.parseDouble(textField.getText())>=0){
+				try {
+					if (textField.getText().length() > 0
+							&& Double.parseDouble(textField.getText()) >= 0) {
 						double input = Double.parseDouble(textField.getText());
 						return_money(input);
-					}
-					else{
+					} else {
 						textField1.setText("0.0");
 					}
-				} catch(NumberFormatException e){
-					//JOptionPane.showMessageDialog(purchasePane,"Invalid input. Please use numbers only!");
+				} catch (NumberFormatException e) {
+					// JOptionPane.showMessageDialog(purchasePane,"Invalid input. Please use numbers only!");
 					log.error(e);
 				}
 			}
-			
+
 			@Override
 			public void insertUpdate(DocumentEvent arg0) {
-				try{
-					if (textField.getText().length()>0&&Double.parseDouble(textField.getText())>=0){
+				try {
+					if (textField.getText().length() > 0
+							&& Double.parseDouble(textField.getText()) >= 0) {
 						double input = Double.parseDouble(textField.getText());
 						return_money(input);
 					}
-				} catch(NumberFormatException e){
+				} catch (NumberFormatException e) {
 					textField1.setText("ERROR");
-					JOptionPane.showMessageDialog(purchasePane,"Invalid input. Please use numbers only!");
+					JOptionPane.showMessageDialog(purchasePane,
+							"Invalid input. Please use numbers only!");
 					log.error(e);
 				}
 			}
-			
+
 			@Override
 			public void changedUpdate(DocumentEvent arg0) {
-				try{
-					if (textField.getText().length()>0&&Double.parseDouble(textField.getText())>=0){
+				try {
+					if (textField.getText().length() > 0
+							&& Double.parseDouble(textField.getText()) >= 0) {
 						double input = Double.parseDouble(textField.getText());
 						return_money(input);
 					}
-				} catch(NumberFormatException e){
+				} catch (NumberFormatException e) {
 					textField1.setText("ERROR");
-					JOptionPane.showMessageDialog(purchasePane,"Invalid input. Please use numbers only!");
+					JOptionPane.showMessageDialog(purchasePane,
+							"Invalid input. Please use numbers only!");
 					log.error(e);
 				}
 			}
@@ -277,7 +280,7 @@ public class PurchaseTab {
 			log.error(e1.getMessage());
 		}
 	}
-	
+
 	protected void savePurchase() {
 		AcceptOrder order = new AcceptOrder(model
 				.getCurrentPurchaseTableModel().getTableRows(),
@@ -314,17 +317,17 @@ public class PurchaseTab {
 		newPurchase.setEnabled(true);
 		purchasePane.setEnabled(false);
 	}
-	
-	private void saleOK(){
+
+	private void saleOK() {
 		purchasePane.reset();
-		
+
 		accept.setEnabled(true);
 		cancel.setEnabled(true);
 	}
-	
-	private void saleNotOK(){
+
+	private void saleNotOK() {
 		purchasePane.reset();
-		
+
 		accept.setEnabled(false);
 		cancel.setEnabled(true);
 	}
@@ -372,51 +375,55 @@ public class PurchaseTab {
 	}
 
 	public void additionalScreen() {
-		dialog = new JDialog();
+		JFrame frame = new JFrame();
+		dialog = new JDialog(frame, "Confirm order");
 		JPanel panel = new JPanel(new GridBagLayout());
-		panel.setBorder(BorderFactory.createTitledBorder("Confirmation required"));
-		
-		GridBagConstraints c=getConstraintsForPurchasePanel();
+		panel.setBorder(BorderFactory
+				.createTitledBorder("Confirmation required"));
+
+		GridBagConstraints c = getConstraintsForPurchasePanel();
 		JLabel total = new JLabel("Total sum is: ");
 		getPurchaseSum();
 		JLabel total_sum = new JLabel(String.valueOf(sum));
 		panel.add(total);
-		panel.add(total_sum,c);
+		panel.add(total_sum, c);
 		JLabel label = new JLabel("Payment amount: ");
-		panel.add(label,c);
+		panel.add(label, c);
 		textField = displayInputField();
-		panel.add(textField,c);
+		panel.add(textField, c);
 		JLabel label1 = new JLabel("Change: ");
-		panel.add(label1,c);
+		panel.add(label1, c);
 		textField1 = new JTextField(15);
 		textField1.setEditable(false);
-		panel.add(textField1,c);
-		
+		panel.add(textField1, c);
+
 		accept = acceptPaymentButton();
-		GridBagConstraints gc=getConstraintsForMenuButtons();
-		gc.insets = new Insets(10,0,0,0);
-		panel.add(accept,gc);
+		GridBagConstraints gc = getConstraintsForMenuButtons();
+		gc.insets = new Insets(10, 0, 0, 0);
+		panel.add(accept, gc);
 		cancel = cancelPaymentButton();
-		panel.add(cancel,gc);
+		panel.add(cancel, gc);
 		saleNotOK();
-		
+
 		dialog.add(panel);
 		dialog.pack();
 		dialog.setLocation(purchasePane.getLocationOnScreen());
 		dialog.setVisible(true);
 	}
-	private void return_money(double input){
-		double to_return = input-sum;
-		if (to_return>=0){
+
+	private void return_money(double input) {
+		double to_return = input - sum;
+		if (to_return >= 0) {
 			saleOK();
-		}
-		else{
+		} else {
 			saleNotOK();
 		}
-		textField1.setText(String.valueOf(Math.round(to_return*100.0)/100.0));
+		textField1
+				.setText(String.valueOf(Math.round(to_return * 100.0) / 100.0));
 	}
-	
-	private void getPurchaseSum(){
-		sum=Double.parseDouble(model.getCurrentPurchaseTableModel().total_sum());
+
+	private void getPurchaseSum() {
+		sum = Double.parseDouble(model.getCurrentPurchaseTableModel()
+				.total_sum());
 	}
 }
