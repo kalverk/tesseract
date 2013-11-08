@@ -24,6 +24,8 @@ public class ConsoleUI {
 	private static final Logger log = Logger.getLogger(ConsoleUI.class);
 
 	private final SalesDomainController dc;
+	
+	private final Session session;
 
 	private List<StockItem> cart;
 
@@ -31,6 +33,7 @@ public class ConsoleUI {
 
 	public ConsoleUI(SalesDomainController domainController) {
 		this.dc = domainController;
+		this.session = HibernateUtil.currentSession();
 
 		cart = new ArrayList<StockItem>();
 		warehouse = new ArrayList<StockItem>();
