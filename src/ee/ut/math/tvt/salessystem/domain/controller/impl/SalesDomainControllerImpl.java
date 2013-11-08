@@ -3,6 +3,7 @@ package ee.ut.math.tvt.salessystem.domain.controller.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import ee.ut.math.tvt.hibernate.HibernateUtil;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
@@ -45,7 +46,7 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 
 	@Override
 	public void endSession() {
-	//	HibernateUtil.closeSession();
+	HibernateUtil.closeSession();
 		
 	}
 }
