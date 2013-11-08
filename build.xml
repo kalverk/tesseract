@@ -11,8 +11,35 @@
 	<property name="conf.dir" value="${basedir}/etc" />
 	<property name="doc.dir" value="${build.dir}/doc" />
 	<property name="test.reports.dir" value="${build.dir}/reports/" />
+	<property name="lib.dir" value="${basedir}/lib" />
+
+	<!-- database variables -->
+	<property name="data.dir" value="${basedir}/data" />
+	<property name="db.file" value="${data.dir}/POSdb" />
+	<property name="db.alias" value="POS" />
+	<property name="db.url" value="jdbc:hsqldb:hsql://localhost/POS" />
+	<property name="lib.hibernate.dir" value="${lib.dir}/hibernate" />
 
 	<!-- Definitions of classpath variants used for different tasks -->
+
+	<path id="run.classpath">
+		<pathelement location="${build.classes.dir}" />
+		<!-- configuration -->
+		<pathelement location="${conf.dir}" />
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+
+		<fileset dir="${lib.hibernate.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
+
+	<path id="compile.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="*.jar" />
+		</fileset>
+	</path>
 
 	<path id="compile.classpath">
 		<fileset dir="lib">
@@ -29,19 +56,22 @@
 		</fileset>
 	</path>
 
-	<!-- Definitions of runnable ant targets.
-         Run them from the command line by executing "ant [targetname]" 
-         debuggimine töötab kui classides on breakpointid lisatud -->
+	<!-- Definitions of runnable ant targets. Run them from the command line 
+		by executing "ant [targetname]" debuggimine töötab kui classides on breakpointid 
+		lisatud -->
 
 	<target name="run" depends="build" description="Run the template application">
-		<java classname="ee.ut.math.tvt.tesseract.Intro" classpathref="test.classpath" fork="yes">
+		<java classname="ee.ut.math.tvt.tesseract.Intro" classpathref="test.classpath"
+			fork="yes">
 			<jvmarg value="-Xdebug" />
-			<jvmarg value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
+			<jvmarg
+				value="-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=1044" />
 		</java>
 	</target>
 
 	<target name="runc" depends="build" description="Run the application (console)">
-		<java classname="ee.ut.math.tvt.tesseract.Intro" classpathref="test.classpath" fork="yes">
+		<java classname="ee.ut.math.tvt.tesseract.Intro" classpathref="test.classpath"
+			fork="yes">
 			<arg value="console" />
 		</java>
 	</target>
@@ -49,7 +79,9 @@
 	<target name="build" description="Build the system">
 		<mkdir dir="${build.dir}" />
 		<mkdir dir="${build.classes.dir}" />
-		<javac srcdir="${src.dir}" destdir="${build.classes.dir}" debug="true" debuglevel="lines,vars,source" encoding="utf-8" compiler="modern" target="1.7" source="1.7" includeantruntime="false">
+		<javac srcdir="${src.dir}" destdir="${build.classes.dir}" debug="true"
+			debuglevel="lines,vars,source" encoding="utf-8" compiler="modern"
+			target="1.7" source="1.7" includeantruntime="false">
 			<classpath refid="compile.classpath" />
 		</javac>
 
@@ -61,11 +93,12 @@
 		<delete dir="${build.dir}" />
 	</target>
 
-	<!-- creates in the folder build/jar a separate JAR file, that has all your created classes, two property files and other components that are required
-	 for running your intro window. The name of the JAR file must be your team name. 
-	 
-	 In addition, with every new JAR file build, your build.revision.number must 
-	 increase automatically by one and as a result build.number last part must also increase by one. -->
+	<!-- creates in the folder build/jar a separate JAR file, that has all your 
+		created classes, two property files and other components that are required 
+		for running your intro window. The name of the JAR file must be your team 
+		name. In addition, with every new JAR file build, your build.revision.number 
+		must increase automatically by one and as a result build.number last part 
+		must also increase by one. -->
 
 
 	<target name="dist" description="Creates tesseract.jar">
@@ -89,23 +122,23 @@
 		</copy>
 
 		<propertyfile file="etc/version.properties">
-			<entry key="build.revision.number" type="int" operation="+" value="1" />
+			<entry key="build.revision.number" type="int" operation="+"
+				value="1" />
 		</propertyfile>
 
 	</target>
 
-	<!-- opens your intro window using the JAR file created by your dist ANT target -->
+	<!-- opens your intro window using the JAR file created by your dist ANT 
+		target -->
 	<target name="jrun" description="Run using tesseract.jar">
 
 		<java jar="${build.dir}/jar/tesseract.jar" fork="yes" />
 
 	</target>
 
-	<!-- on execution it should ask for a commit comment, 
-	make a commit to the local repository and push changes to the GitHub server
-	
-	git kaustas config failis:
-	remote origin: url= https://kasutaja:parool@github.com -->
+	<!-- on execution it should ask for a commit comment, make a commit to the 
+		local repository and push changes to the GitHub server git kaustas config 
+		failis: remote origin: url= https://kasutaja:parool@github.com -->
 	<target name="git_commit" description="add, commit, push">
 		<input message="Tag message: " addproperty="git.tag.message" />
 		<exec executable="git">
@@ -122,8 +155,8 @@
 		</exec>
 	</target>
 
-	<!-- on execution it should ask for a tag name and comment.
-	 This target should create the corresponding tag and synchronize it with the GitHub. -->
+	<!-- on execution it should ask for a tag name and comment. This target 
+		should create the corresponding tag and synchronize it with the GitHub. -->
 
 	<target name="git_tag" description="create tag and synchronize">
 		<input message="Tag name: " addproperty="git.tag.name" />
@@ -139,6 +172,20 @@
 			<arg value="push" />
 			<arg value="--tags" />
 		</exec>
+	</target>
+
+	<target name="dbmanager" description="Start the HSQLDB manager">
+		<java classname="org.hsqldb.util.DatabaseManagerSwing"
+			classpathref="run.classpath" fork="yes">
+			<arg line="--user sa --url ${db.url}" />
+		</java>
+	</target>
+
+	<target name="startdb" description="Start the HSQLDB with the default params">
+		<java classname="org.hsqldb.Server" classpathref="run.classpath"
+			fork="yes">
+			<arg line="-database.0 '${db.file}' -dbname.0 '${db.alias}'" />
+		</java>
 	</target>
 
 </project>
