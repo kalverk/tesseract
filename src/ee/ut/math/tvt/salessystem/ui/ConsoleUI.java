@@ -21,10 +21,6 @@ import ee.ut.math.tvt.salessystem.util.HibernateUtil;
  * 
  */
 public class ConsoleUI {
-	
-
-	
-	
 	private static final Logger log = Logger.getLogger(ConsoleUI.class);
 
 	private final SalesDomainController dc;
@@ -38,7 +34,7 @@ public class ConsoleUI {
 
 		cart = new ArrayList<StockItem>();
 		warehouse = new ArrayList<StockItem>();
-		
+
 	}
 
 	/**

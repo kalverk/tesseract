@@ -5,6 +5,7 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
 import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 import ee.ut.math.tvt.salessystem.ui.tabs.StockTab;
+import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
 import java.awt.Dimension;
 import java.awt.Toolkit;
@@ -17,6 +18,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import org.apache.log4j.Logger;
+import org.hibernate.Session;
 
 import com.jgoodies.looks.windows.WindowsLookAndFeel;
 
@@ -28,6 +30,8 @@ public class SalesSystemUI extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(SalesSystemUI.class);
+
+	private final Session session;
 
 	private final SalesDomainController domainController;
 
@@ -48,6 +52,7 @@ public class SalesSystemUI extends JFrame {
 	public SalesSystemUI(SalesDomainController domainController) {
 		this.domainController = domainController;
 		this.model = new SalesSystemModel(domainController);
+		this.session = HibernateUtil.currentSession();
 
 		// Create singleton instances of the tab classes
 		historyTab = new HistoryTab(model);
@@ -81,11 +86,10 @@ public class SalesSystemUI extends JFrame {
 			}
 		});
 	}
-	
-	private void end(){
+
+	private void end() {
 		domainController.endSession();
 	}
-	
 
 	private void drawWidgets() {
 		JTabbedPane tabbedPane = new JTabbedPane();
