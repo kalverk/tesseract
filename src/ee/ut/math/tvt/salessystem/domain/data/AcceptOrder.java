@@ -20,7 +20,7 @@ public class AcceptOrder implements DisplayableItem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private final Long id;
 
-	@OneToMany(mappedBy = "sale_id")
+	@OneToMany(mappedBy = "acceptorder")
 	private final List<SoldItem> solditems;
 
 	@Column(name = "DATE")

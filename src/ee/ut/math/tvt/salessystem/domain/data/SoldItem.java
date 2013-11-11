@@ -24,8 +24,8 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "SALE_ID", nullable = false)
-	private Long sale_id;
+	@JoinColumn(name = "SALE_ID", nullable = true)
+	private AcceptOrder acceptorder;
 
 	@OneToOne
 	@JoinColumn(name = "STOCKITEM_ID", nullable = false)
