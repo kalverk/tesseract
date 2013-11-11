@@ -37,7 +37,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	@Column(name = "QUANTITY")
 	private Integer quantity;
 
-	@Column(name = "PRICE")
+	@Column(name = "ITEMPRICE")
 	private double price;
 
 	public SoldItem(StockItem stockItem, int quantity) {
