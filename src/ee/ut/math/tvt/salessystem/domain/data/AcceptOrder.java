@@ -2,21 +2,34 @@ package ee.ut.math.tvt.salessystem.domain.data;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ACCEPTORDER")
 public class AcceptOrder implements DisplayableItem {
 
 	private static long ID = 1;
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private final Long id;
 
+	@OneToMany(mappedBy = "sale_id")
 	private final List<SoldItem> solditems;
 
+	@Column(name = "DATE")
 	private final String date;
 
+	@Column(name = "TIME")
 	private final String time;
 
-
-	public AcceptOrder(List<SoldItem> solditems, String date, String time
-			) {
+	public AcceptOrder(List<SoldItem> solditems, String date, String time) {
 		this.solditems = solditems;
 		this.date = date;
 		this.time = time;
