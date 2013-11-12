@@ -48,6 +48,10 @@ public class SoldItem implements Cloneable, DisplayableItem {
 
 	}
 
+	public SoldItem() {
+
+	}
+
 	public Long getId() {
 		return id;
 	}

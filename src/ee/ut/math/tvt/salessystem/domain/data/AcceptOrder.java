@@ -18,16 +18,16 @@ public class AcceptOrder implements DisplayableItem {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private final Long id;
+	private Long id;
 
 	@OneToMany(mappedBy = "acceptorder")
-	private final List<SoldItem> solditems;
+	private List<SoldItem> solditems;
 
 	@Column(name = "DATE")
-	private final String date;
+	private String date;
 
 	@Column(name = "TIME")
-	private final String time;
+	private String time;
 
 	public AcceptOrder(List<SoldItem> solditems, String date, String time) {
 		this.solditems = solditems;
@@ -35,6 +35,9 @@ public class AcceptOrder implements DisplayableItem {
 		this.time = time;
 		this.id = ID;
 		ID += 1;
+	}
+
+	public AcceptOrder() {
 	}
 
 	@Override
