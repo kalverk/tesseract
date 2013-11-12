@@ -11,22 +11,35 @@ import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
 @SuppressWarnings("unchecked")
 public class HibernateDataService {
-	
+
 	private Session session = HibernateUtil.currentSession();
-	
+
 	public List<StockItem> getStockItems() {
 		List<StockItem> result = session.createQuery("from StockItem").list();
 		return result;
 	}
-	
+
 	public List<AcceptOrder> getAcceptOrders() {
-		List<AcceptOrder> result = session.createQuery("from AcceptOrder").list();
+		List<AcceptOrder> result = session.createQuery("from AcceptOrder")
+				.list();
 		return result;
 	}
-	
+
 	public List<SoldItem> getSoldItems() {
 		List<SoldItem> result = session.createQuery("from SoldItem").list();
 		return result;
+	}
+
+	public void update(StockItem stockitem) {
+		session.beginTransaction();
+		session.update(stockitem);
+		session.getTransaction().commit();
+	}
+
+	public void addStockItem(StockItem stockitem) {
+		session.beginTransaction();
+		session.save(stockitem);
+		session.getTransaction().commit();
 	}
 
 }
