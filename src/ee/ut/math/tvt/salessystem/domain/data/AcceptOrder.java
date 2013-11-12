@@ -10,11 +10,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import ee.ut.math.tvt.salessystem.service.HibernateDataService;
+
 @Entity
 @Table(name = "ACCEPTORDER")
 public class AcceptOrder implements DisplayableItem {
 
 	private static long ID = 1;
+	HibernateDataService service = new HibernateDataService();
+
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,15 +41,25 @@ public class AcceptOrder implements DisplayableItem {
 		ID += 1;
 	}
 
-	public AcceptOrder() {
+	public AcceptOrder(Long id, String date, String time) {
+		this.id = ID;
+		this.date = date;
+		this.time = time;
 	}
+	
+
 
 	@Override
 	public Long getId() {
 		return id;
 	}
+	
+	
+
 
 	public List<SoldItem> getSoldItems() {
+		solditems = service.getSoldItems();
+
 		return solditems;
 	}
 

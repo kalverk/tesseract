@@ -12,8 +12,10 @@ import org.hibernate.Session;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
+import ee.ut.math.tvt.salessystem.domain.data.AcceptOrder;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.ui.model.HistoryTableModel;
 import ee.ut.math.tvt.salessystem.util.HibernateUtil;
 
 /**
@@ -26,10 +28,13 @@ public class ConsoleUI {
 	private final SalesDomainController dc;
 	
 	private final Session session;
+	
+	private HistoryTableModel historyTabel;
 
 	private List<StockItem> cart;
 
 	private List<StockItem> warehouse;
+	private List<AcceptOrder> history;
 
 	public ConsoleUI(SalesDomainController domainController) {
 		this.dc = domainController;
@@ -47,6 +52,7 @@ public class ConsoleUI {
 		try {
 			// populate warehouse with goodies
 			populateWarehouse();
+			populateHistory();
 
 			System.out.println("===========================");
 			System.out.println("=       Sales System      =");
@@ -65,6 +71,12 @@ public class ConsoleUI {
 		} catch (IOException e) {
 			log.error(e.getMessage());
 		}
+	}
+
+
+
+	private void populateHistory() {
+		historyTabel.populateWithData(historyTabel.loadHistoryState());
 	}
 
 	private void populateWarehouse() {

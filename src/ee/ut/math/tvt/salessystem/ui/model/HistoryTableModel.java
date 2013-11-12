@@ -6,6 +6,8 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.AcceptOrder;
+import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.service.HibernateDataService;
 
 /**
  * History item table model.
@@ -14,8 +16,11 @@ public class HistoryTableModel extends SalesSystemTableModel<AcceptOrder> {
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger log = Logger.getLogger(StockTableModel.class);
+	
+	HibernateDataService service = new HibernateDataService();
 
-	private final List<AcceptOrder> orders = new ArrayList<>();
+
+	private final List<AcceptOrder> orders = service.getAcceptOrders();
 	public HistoryTableModel() {
 		super(new String[] { "Id", "Date", "Time", "Total" });
 	}
@@ -25,6 +30,19 @@ public class HistoryTableModel extends SalesSystemTableModel<AcceptOrder> {
 		rows.add(order);
 		fireTableDataChanged();
 
+	}
+	
+
+	public List<AcceptOrder> loadHistoryState() {
+		List<AcceptOrder> dataset = service.getAcceptOrders();
+
+		return dataset;
+	}
+	
+	@Override
+	public void populateWithData(List<AcceptOrder> data) {
+		// TODO Auto-generated method stub
+		super.populateWithData(data);
 	}
 	
 	public AcceptOrder getOrder(int row){
