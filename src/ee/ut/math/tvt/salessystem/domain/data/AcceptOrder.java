@@ -17,7 +17,7 @@ import ee.ut.math.tvt.salessystem.service.HibernateDataService;
 public class AcceptOrder implements DisplayableItem {
 
 	private static long ID = 1;
-	HibernateDataService service = new HibernateDataService();
+	//HibernateDataService service = new HibernateDataService();
 
 
 	@Id
@@ -46,6 +46,9 @@ public class AcceptOrder implements DisplayableItem {
 		this.date = date;
 		this.time = time;
 	}
+	public AcceptOrder() {
+		
+	}
 	
 
 
@@ -58,7 +61,7 @@ public class AcceptOrder implements DisplayableItem {
 
 
 	public List<SoldItem> getSoldItems() {
-		solditems = service.getSoldItems();
+	//	solditems = service.getSoldItems();
 
 		return solditems;
 	}

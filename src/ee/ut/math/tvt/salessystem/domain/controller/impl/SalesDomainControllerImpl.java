@@ -51,4 +51,10 @@ public class SalesDomainControllerImpl implements SalesDomainController {
 		HibernateUtil.closeSession();
 
 	}
+
+	@Override
+	public void addStockItem(StockItem stockitem) {
+		service.addStockItem(stockitem);
+		
+	}
 }

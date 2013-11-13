@@ -1,5 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
+import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
@@ -37,6 +38,10 @@ public class StockTab {
 	private JButton addItem;
 
 	private SalesSystemModel model;
+	
+	 SalesDomainController dc;
+	
+	
 
 	// StockItem variables
 	private long id;
@@ -90,6 +95,7 @@ public class StockTab {
 										// items fill be added.
 			StockItem stockItem = new StockItem(id, name, desc, price, amount);
 			model.getWarehouseTableModel().addItem(stockItem);
+			dc.addStockItem(stockItem);
 			log.info("New item added");
 		} else {
 			return;
@@ -135,7 +141,7 @@ public class StockTab {
 		panel.add(priceField);
 		panel.add(amountLabel);
 		panel.add(amountField);
-
+;
 		while (true) {
 			int result = JOptionPane.showOptionDialog(frame, panel,
 					"Item information adding", JOptionPane.OK_CANCEL_OPTION,

@@ -46,4 +46,6 @@ public interface SalesDomainController {
 			throws VerificationFailedException;
 
 	public void endSession();
+
+	public void addStockItem(StockItem stockitem);
 }
