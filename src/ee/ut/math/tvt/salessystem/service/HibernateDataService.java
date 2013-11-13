@@ -41,5 +41,15 @@ public class HibernateDataService {
 		session.save(stockitem);
 		session.getTransaction().commit();
 	}
+	public void addSoldItem(SoldItem solditem) {
+		session.beginTransaction();
+		session.save(solditem);
+		session.getTransaction().commit();
+	}
+	public void addAcceptOrder(AcceptOrder acceptorder) {
+		session.beginTransaction();
+		session.save(acceptorder);
+		session.getTransaction().commit();
+	}
 
 }

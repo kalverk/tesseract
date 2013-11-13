@@ -1,14 +1,10 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import ee.ut.math.tvt.salessystem.service.HibernateDataService;
 
@@ -32,6 +28,9 @@ public class AcceptOrder implements DisplayableItem {
 
 	@Column(name = "TIME")
 	private String time;
+	
+	@Transient
+	private float total;
 
 	public AcceptOrder(List<SoldItem> solditems, String date, String time) {
 		this.solditems = solditems;
@@ -46,6 +45,18 @@ public class AcceptOrder implements DisplayableItem {
 		this.date = date;
 		this.time = time;
 	}
+	public AcceptOrder(Date date, List<SoldItem> soldItems) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+        this.date = dateFormat.format(date);
+        this.time = timeFormat.format(date);
+        total = 0;
+        for (SoldItem s : soldItems) {
+                total += s.getSum();
+        }
+        System.out.println(total);
+        this.solditems = solditems;
+}
 	public AcceptOrder() {
 		
 	}
@@ -77,6 +88,14 @@ public class AcceptOrder implements DisplayableItem {
 	public String getTime() {
 		return time;
 	}
+	
+	public float getTotal() {
+		return total;
+	}
+
+	public void setTotal(float total) {
+		this.total = total;
+	}
 
 	public String getTotalSum() {
 		Double purchaseSum = 0.0;
@@ -86,3 +105,4 @@ public class AcceptOrder implements DisplayableItem {
 		return purchaseSum.toString();
 	}
 }
+

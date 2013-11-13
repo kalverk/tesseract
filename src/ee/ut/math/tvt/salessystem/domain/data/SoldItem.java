@@ -48,6 +48,14 @@ public class SoldItem implements Cloneable, DisplayableItem {
 
 	}
 
+	public AcceptOrder getAcceptorder() {
+		return acceptorder;
+	}
+
+	public void setAcceptorder(AcceptOrder acceptorder) {
+		this.acceptorder = acceptorder;
+	}
+
 	public SoldItem() {
 
 	}
