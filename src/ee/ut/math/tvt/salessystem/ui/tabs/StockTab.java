@@ -67,8 +67,9 @@ public class StockTab {
 	private JLabel priceLabel;
 	private JLabel amountLabel;
 
-	public StockTab(SalesSystemModel model) {
+	public StockTab(SalesSystemModel model, SalesDomainController dc) {
 		this.model = model;
+		this.dc = dc;
 	}
 
 	// addItem button ->adding functionality
@@ -94,7 +95,11 @@ public class StockTab {
 		if (createItemInfoOption()) { // if item info editing tab isn't canceled
 										// items fill be added.
 			StockItem stockItem = new StockItem(id, name, desc, price, amount);
+			log.info("BEFORE");
+			log.info(stockItem);
+			log.info("AFTER");
 			model.getWarehouseTableModel().addItem(stockItem);
+			dc.loadWarehouseState().add(stockItem);
 			dc.addStockItem(stockItem);
 			log.info("New item added");
 		} else {
