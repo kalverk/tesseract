@@ -1,10 +1,13 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -19,8 +22,8 @@ public class StockItem implements Cloneable, DisplayableItem {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@OneToOne(mappedBy = "stockItem")
-	private SoldItem solditem;
+	@OneToMany(mappedBy = "stockItem")
+	private List<SoldItem> solditems;
 
 	@Column(name = "NAME")
 	private String name;

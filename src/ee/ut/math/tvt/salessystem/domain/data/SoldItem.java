@@ -27,7 +27,7 @@ public class SoldItem implements Cloneable, DisplayableItem {
 	@JoinColumn(name = "SALE_ID", nullable = true)
 	private AcceptOrder acceptorder;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "STOCKITEM_ID", nullable = false)
 	private StockItem stockItem;
 
@@ -48,13 +48,13 @@ public class SoldItem implements Cloneable, DisplayableItem {
 
 	}
 
-	public AcceptOrder getAcceptorder() {
+	/*public AcceptOrder getAcceptorder() {
 		return acceptorder;
 	}
 
 	public void setAcceptorder(AcceptOrder acceptorder) {
 		this.acceptorder = acceptorder;
-	}
+	}*/
 
 	public SoldItem() {
 
