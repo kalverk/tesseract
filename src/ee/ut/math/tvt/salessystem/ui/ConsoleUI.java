@@ -76,7 +76,8 @@ public class ConsoleUI {
 
 
 	private void populateHistory() {
-		historyTabel.populateWithData(historyTabel.loadHistoryState());
+		history = dc.loadHistoryState();
+
 	}
 
 	private void populateWarehouse() {
