@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
+import ee.ut.math.tvt.salessystem.domain.data.AcceptOrder;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
@@ -18,6 +19,8 @@ import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -38,6 +41,8 @@ public class SalesSystemUI extends JFrame {
 
 	private final SalesDomainController domainController;
 
+	private List<AcceptOrder> history;
+
 	// Warehouse model
 	private SalesSystemModel model;
 
@@ -52,6 +57,7 @@ public class SalesSystemUI extends JFrame {
 	 * @param domainController
 	 *            Sales domain controller.
 	 */
+
 	public SalesSystemUI(SalesDomainController domainController) {
 		this.domainController = domainController;
 		this.model = new SalesSystemModel(domainController);
@@ -95,11 +101,27 @@ public class SalesSystemUI extends JFrame {
 	}
 
 	private void drawWidgets() {
-		JTabbedPane tabbedPane = new JTabbedPane();
+		final JTabbedPane tabbedPane = new JTabbedPane();
 
 		tabbedPane.add("Point-of-sale", purchaseTab.draw());
 		tabbedPane.add("Warehouse", stockTab.draw());
 		tabbedPane.add("History", historyTab.draw());
+
+		tabbedPane.addChangeListener(new ChangeListener() {
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				// TODO Auto-generated method stub
+				log.debug("Selected tab " + tabbedPane.getSelectedIndex());
+				if (tabbedPane.getSelectedIndex() == 2) {
+					log.info("On historyTab");
+					// DB data on uuendatud ja tuleks uuendada tabelit
+					log.info(domainController.loadHistoryState().size());
+					model.setHistoryTabelModel(domainController
+							.loadHistoryState());
+				}
+			}
+		});
 
 		getContentPane().add(tabbedPane);
 	}

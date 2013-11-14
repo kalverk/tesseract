@@ -74,15 +74,15 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 				+ item.getQuantity());
 		fireTableDataChanged();
 	}
-	
-	public void updateItem(SoldItem item, int quantity){
+
+	public void updateItem(SoldItem item, int quantity) {
 		item.setQuantity(quantity);
 		fireTableDataChanged();
 	}
-	
-	public SoldItem getStockItem(StockItem item){
-		for (SoldItem i : rows){
-			if(i.getName().equalsIgnoreCase(item.getName())){
+
+	public SoldItem getStockItem(StockItem item) {
+		for (SoldItem i : rows) {
+			if (i.getName().equalsIgnoreCase(item.getName())) {
 				return i;
 			}
 		}

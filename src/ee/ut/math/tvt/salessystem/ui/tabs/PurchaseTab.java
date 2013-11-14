@@ -157,7 +157,6 @@ public class PurchaseTab {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				// tee midagi kui accepted
 				submitPurchaseButtonClicked();
 				dialog.dispose();
 			}

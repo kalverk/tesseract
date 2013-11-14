@@ -26,9 +26,9 @@ public class ConsoleUI {
 	private static final Logger log = Logger.getLogger(ConsoleUI.class);
 
 	private final SalesDomainController dc;
-	
+
 	private final Session session;
-	
+
 	private HistoryTableModel historyTabel;
 
 	private List<StockItem> cart;
@@ -72,8 +72,6 @@ public class ConsoleUI {
 			log.error(e.getMessage());
 		}
 	}
-
-
 
 	private void populateHistory() {
 		history = dc.loadHistoryState();

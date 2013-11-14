@@ -6,15 +6,9 @@ import java.util.List;
 
 import javax.persistence.*;
 
-import ee.ut.math.tvt.salessystem.service.HibernateDataService;
-
 @Entity
 @Table(name = "ACCEPTORDER")
 public class AcceptOrder implements DisplayableItem {
-
-	private static long ID = 1;
-	//HibernateDataService service = new HibernateDataService();
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +22,7 @@ public class AcceptOrder implements DisplayableItem {
 
 	@Column(name = "TIME")
 	private String time;
-	
+
 	@Transient
 	private float total;
 
@@ -36,40 +30,30 @@ public class AcceptOrder implements DisplayableItem {
 		this.solditems = solditems;
 		this.date = date;
 		this.time = time;
-		this.id = ID;
-		ID += 1;
 	}
 
 	public AcceptOrder(Date date, List<SoldItem> soldItems) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-        this.date = dateFormat.format(date);
-        this.time = timeFormat.format(date);
-        total = 0;
-        for (SoldItem s : soldItems) {
-                total += s.getSum();
-        }
-        System.out.println(total);
-        this.solditems = soldItems;
-        ID+=1;
-}
-	public AcceptOrder() {
-		ID+=1;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+		this.date = dateFormat.format(date);
+		this.time = timeFormat.format(date);
+		total = 0;
+		for (SoldItem s : soldItems) {
+			total += s.getSum();
+		}
+		System.out.println(total);
+		this.solditems = soldItems;
 	}
-	
 
+	public AcceptOrder() {
+	}
 
 	@Override
 	public Long getId() {
 		return id;
 	}
-	
-	
-
 
 	public List<SoldItem> getSoldItems() {
-	//	solditems = service.getSoldItems();
-
 		return solditems;
 	}
 
@@ -84,7 +68,7 @@ public class AcceptOrder implements DisplayableItem {
 	public String getTime() {
 		return time;
 	}
-	
+
 	public float getTotal() {
 		return total;
 	}
@@ -98,8 +82,7 @@ public class AcceptOrder implements DisplayableItem {
 		for (final SoldItem item : solditems) {
 			purchaseSum += item.getSum();
 		}
-		purchaseSum = Math.round(purchaseSum*100)/100.0;
+		purchaseSum = Math.round(purchaseSum * 100) / 100.0;
 		return purchaseSum.toString();
 	}
 }
-
