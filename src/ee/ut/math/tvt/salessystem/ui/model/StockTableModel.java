@@ -42,24 +42,26 @@ public class StockTableModel extends SalesSystemTableModel<StockItem> {
 	 * @param stockItem
 	 */
 	public void addItem(final StockItem stockItem) {
-		try {
-			StockItem item = getItemById(stockItem.getId());
-			item.setQuantity(item.getQuantity() + stockItem.getQuantity());
-			log.debug("Found existing item " + stockItem.getName()
-					+ " increased quantity by " + stockItem.getQuantity());
-		} catch (NoSuchElementException e) {
-			rows.add(stockItem);
-			log.debug("Added " + stockItem.getName() + " quantity of "
-					+ stockItem.getQuantity());
-		}
+		/*
+		 * try { StockItem item = getItemById(stockItem.getId());
+		 * item.setQuantity(item.getQuantity() + stockItem.getQuantity());
+		 * log.debug("Found existing item " + stockItem.getName() +
+		 * " increased quantity by " + stockItem.getQuantity()); } catch
+		 * (NoSuchElementException e) {
+		 */
+		rows.add(stockItem);
+		log.debug("Added " + stockItem.getName() + " quantity of "
+				+ stockItem.getQuantity());
+		// }
 		fireTableDataChanged();
 	}
-	
+
 	public void decreaseItemsQuantity(List<SoldItem> solditems) {
-		for(SoldItem soldItem : solditems) {
+		for (SoldItem soldItem : solditems) {
 			StockItem item = getItemByName(soldItem.getName());
 			item.setQuantity(item.getQuantity() - soldItem.getQuantity());
-			log.debug("Decreased quantity of " + item.getName() + " by " + soldItem.getQuantity());
+			log.debug("Decreased quantity of " + item.getName() + " by "
+					+ soldItem.getQuantity());
 			fireTableDataChanged();
 		}
 	}

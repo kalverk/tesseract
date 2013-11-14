@@ -38,10 +38,8 @@ public class StockTab {
 	private JButton addItem;
 
 	private SalesSystemModel model;
-	
-	 SalesDomainController dc;
-	
-	
+
+	SalesDomainController dc;
 
 	// StockItem variables
 	private long id;
@@ -146,7 +144,7 @@ public class StockTab {
 		panel.add(priceField);
 		panel.add(amountLabel);
 		panel.add(amountField);
-;
+		;
 		while (true) {
 			int result = JOptionPane.showOptionDialog(frame, panel,
 					"Item information adding", JOptionPane.OK_CANCEL_OPTION,
@@ -172,8 +170,7 @@ public class StockTab {
 					price = Math
 							.round((Double.parseDouble(priceField.getText()) * 100.0)) / 100.0;
 					amount = (int) (Double.parseDouble(amountField.getText()));
-					// To add ID has to be available or price,name and id should
-					// match
+					// To add ID has to be available
 					return true;
 				} else {
 					createWarning(warningInfo);
@@ -190,15 +187,16 @@ public class StockTab {
 		try {
 			StockItem item = model.getWarehouseTableModel().getItemById(
 					(long) (Double.parseDouble(idField.getText())));
-			if (Long.parseLong(idField.getText()) == item.getId()
-					&& nameField.getText().equalsIgnoreCase(item.getName())
-					&& Double.parseDouble(priceField.getText()) == item
-							.getPrice()) {
-				return true;
-			} else {
-				warningInfo = "This Id is occupied with another product. Try different Id.";
-				return false;
-			}
+
+			/*
+			 * if (Long.parseLong(idField.getText()) == item.getId() &&
+			 * nameField.getText().equalsIgnoreCase(item.getName()) &&
+			 * Double.parseDouble(priceField.getText()) == item .getPrice()) {
+			 * return true; } else {
+			 */
+			warningInfo = "This Id is occupied with another product. Try different Id.";
+			return false;
+			// }
 		} catch (NoSuchElementException e) {
 			// Means there is no such ID in warehouse we can occupy this ID.
 			log.debug(e);
