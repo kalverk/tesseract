@@ -1,5 +1,7 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
+import java.util.NoSuchElementException;
+
 import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
@@ -71,6 +73,20 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		log.debug("Added " + item.getName() + " quantity of "
 				+ item.getQuantity());
 		fireTableDataChanged();
+	}
+	
+	public void updateItem(SoldItem item, int quantity){
+		item.setQuantity(quantity);
+		fireTableDataChanged();
+	}
+	
+	public SoldItem getStockItem(StockItem item){
+		for (SoldItem i : rows){
+			if(i.getName().equalsIgnoreCase(item.getName())){
+				return i;
+			}
+		}
+		throw new NoSuchElementException();
 	}
 
 	public String total_sum() {

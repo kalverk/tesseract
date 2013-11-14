@@ -233,6 +233,8 @@ public class PurchaseItemPanel extends JPanel {
 				log.error(ex);
 				quantity = 1;
 			}
+			SoldItem exsistingItem = getExsistingItems(stockItem);
+
 			try {
 				if (stockItem.getQuantity()
 						- model.getCurrentPurchaseTableModel().total_quantity(
@@ -240,9 +242,15 @@ public class PurchaseItemPanel extends JPanel {
 
 					throw new VerificationFailedException("not enough items");
 				}
-
-				model.getCurrentPurchaseTableModel().addItem(
-						new SoldItem(stockItem, quantity));
+								
+				if(exsistingItem!=null){
+					quantity = exsistingItem.getQuantity() + quantity;
+					model.getCurrentPurchaseTableModel().updateItem(exsistingItem, quantity);
+				}
+				else{
+					model.getCurrentPurchaseTableModel().addItem(
+							new SoldItem(stockItem, quantity));
+				}
 
 			} catch (VerificationFailedException e) {
 
@@ -254,6 +262,14 @@ public class PurchaseItemPanel extends JPanel {
 				log.error(e);
 				raam.setVisible(false);
 			}
+		}
+	}
+	
+	private SoldItem getExsistingItems(StockItem item){
+		try{
+			return model.getCurrentPurchaseTableModel().getStockItem(item);
+		}catch (NoSuchElementException e){
+			return null;
 		}
 	}
 

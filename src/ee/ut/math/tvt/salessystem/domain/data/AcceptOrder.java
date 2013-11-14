@@ -40,11 +40,6 @@ public class AcceptOrder implements DisplayableItem {
 		ID += 1;
 	}
 
-	public AcceptOrder(Long id, String date, String time) {
-		this.id = ID;
-		this.date = date;
-		this.time = time;
-	}
 	public AcceptOrder(Date date, List<SoldItem> soldItems) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -56,9 +51,10 @@ public class AcceptOrder implements DisplayableItem {
         }
         System.out.println(total);
         this.solditems = soldItems;
+        ID+=1;
 }
 	public AcceptOrder() {
-		
+		ID+=1;
 	}
 	
 
@@ -102,6 +98,7 @@ public class AcceptOrder implements DisplayableItem {
 		for (final SoldItem item : solditems) {
 			purchaseSum += item.getSum();
 		}
+		purchaseSum = Math.round(purchaseSum*100)/100.0;
 		return purchaseSum.toString();
 	}
 }
