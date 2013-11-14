@@ -187,13 +187,6 @@ public class StockTab {
 		try {
 			StockItem item = model.getWarehouseTableModel().getItemById(
 					(long) (Double.parseDouble(idField.getText())));
-
-			/*
-			 * if (Long.parseLong(idField.getText()) == item.getId() &&
-			 * nameField.getText().equalsIgnoreCase(item.getName()) &&
-			 * Double.parseDouble(priceField.getText()) == item .getPrice()) {
-			 * return true; } else {
-			 */
 			warningInfo = "This Id is occupied with another product. Try different Id.";
 			return false;
 			// }
