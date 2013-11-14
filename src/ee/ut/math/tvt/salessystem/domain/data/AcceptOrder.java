@@ -55,7 +55,7 @@ public class AcceptOrder implements DisplayableItem {
                 total += s.getSum();
         }
         System.out.println(total);
-        this.solditems = solditems;
+        this.solditems = soldItems;
 }
 	public AcceptOrder() {
 		
