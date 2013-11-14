@@ -284,7 +284,7 @@ public class PurchaseTab {
 	protected void savePurchase() {
 		AcceptOrder order = new AcceptOrder(model
 				.getCurrentPurchaseTableModel().getTableRows(),
-				((DateFormat) new SimpleDateFormat("yyyy/MM/dd"))
+				((DateFormat) new SimpleDateFormat("yyyy-MM-dd"))
 						.format(Calendar.getInstance().getTime()),
 				((DateFormat) new SimpleDateFormat("HH:mm:ss")).format(Calendar
 						.getInstance().getTime()));
