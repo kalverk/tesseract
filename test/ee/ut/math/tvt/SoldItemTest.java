@@ -10,20 +10,21 @@ import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 
 public class SoldItemTest {
 	private SoldItem item;
-	
+
 	@Before
-	public void setUp(){
-		item = new SoldItem(new StockItem("Mingitoode", "kirjeldus", 12.00,99),4);
+	public void setUp() {
+		item = new SoldItem(
+				new StockItem("Mingitoode", "kirjeldus", 12.00, 99), 4);
 	}
-	
+
 	@Test
-	public void testGetSum(){
-		assertEquals(item.getSum(), item.getPrice()*item.getQuantity(), 0.01);
+	public void testGetSum() {
+		assertEquals(item.getSum(), item.getPrice() * item.getQuantity(), 0.01);
 	}
-	
+
 	@Test
-	public void testGetSumWithZeroQuantity(){
+	public void testGetSumWithZeroQuantity() {
 		item.setQuantity(0);
-		assertEquals(item.getSum(),0.0,0.01);
+		assertEquals(item.getSum(), 0.0, 0.01);
 	}
 }
