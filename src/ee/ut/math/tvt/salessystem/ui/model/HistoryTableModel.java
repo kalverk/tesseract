@@ -37,7 +37,7 @@ public class HistoryTableModel extends SalesSystemTableModel<AcceptOrder> {
 	}
 
 	@Override
-	protected Object getColumnValue(AcceptOrder item, int columnIndex) {
+	public Object getColumnValue(AcceptOrder item, int columnIndex) {
 		switch (columnIndex) {
 		case 0:
 			return item.getId();
