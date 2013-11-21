@@ -2,6 +2,7 @@ package ee.ut.math.tvt;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
 
 import java.util.NoSuchElementException;
 
@@ -10,7 +11,9 @@ import org.junit.Test;
 
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
+import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
+import ee.ut.math.tvt.salessystem.ui.panels.PurchaseItemPanel;
 
 public class StockTableModelTest {
 
@@ -32,23 +35,14 @@ public class StockTableModelTest {
 		assertEquals(2, model.getTableRows().size());
 	}
 
-	// muidu panin jargneva testi jarele (expected =
-	// IllegalArgumentException.class) aga see ei puudnud exceptionit
-	// miskiparast kinni
-	// asendasin nuud try catchiga siis tootab.
-
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void testHasEnoughInStock() {
-		try {
-			SoldItem item1 = new SoldItem(item, 50);
-		} catch (IllegalArgumentException e) {
+		SoldItem item1 = new SoldItem(item, 50);
 
-		}
 	}
 
 	@Test
 	public void testGetItemByIdWhenItemExsists() {
-		model.addItem(item);
 		assertNotNull(model.getItemById(item.getId()));
 	}
 

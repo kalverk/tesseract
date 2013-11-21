@@ -1,6 +1,7 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
 import javax.persistence.Column;
+import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -8,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
 
 /**
  * Already bought StockItem. SoldItem duplicates name and price for preserving
@@ -44,7 +46,12 @@ public class SoldItem implements Cloneable, DisplayableItem {
 		this.name = stockItem.getName();
 		this.price = stockItem.getPrice();
 		this.quantity = quantity;
+		if (stockItem.getQuantity() < quantity) {
 
+		throw new IllegalArgumentException("not enough items");
+			}
+		
+		
 	}
 
 	public AcceptOrder getAcceptorder() {
