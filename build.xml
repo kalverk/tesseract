@@ -9,15 +9,11 @@
 	<property name="src.dir" value="${basedir}/src" />
 	<property name="dist.dir" value="${basedir}/dist" />
 	<property name="conf.dir" value="${basedir}/conf" />
-	<property name="doc.dir" value="${build.dir}/doc" />
-	<property name="test.reports.dir" value="${build.dir}/reports/" />
 	<property name="lib.dir" value="${basedir}/lib" />
 
 	<!-- TEST -->
 	<property name="test.dir" value="${basedir}/test" />
 	<property name="build.test.dir" value="${build.dir}/test" />
-
-
 
 	<!-- database variables -->
 	<property name="data.dir" value="${basedir}/data" />
@@ -26,7 +22,6 @@
 	<property name="db.url" value="jdbc:hsqldb:hsql://localhost/POS" />
 	<property name="lib.hibernate.dir" value="${lib.dir}/hibernate" />
 
-
 	<!-- Definitions of classpath variants used for different tasks -->
 
 	<path id="run.classpath">
@@ -34,10 +29,6 @@
 		<!-- configuration -->
 		<pathelement location="${conf.dir}" />
 		<fileset dir="${lib.dir}">
-			<include name="*.jar" />
-		</fileset>
-
-		<fileset dir="${lib.hibernate.dir}">
 			<include name="*.jar" />
 		</fileset>
 	</path>
@@ -62,14 +53,6 @@
 		<fileset dir="${lib.hibernate.dir}">
 			<include name="*.jar" />
 		</fileset>
-	</path>
-
-	<path id="test-classpath">
-		<fileset dir="${lib.dir}">
-			<include name="*.jar" />
-		</fileset>
-		<pathelement path="${build.classes.dir}/" />
-		<pathelement path="${build.test.dir}/" />
 	</path>
 
 	<!-- Definitions of runnable ant targets. Run them from the command line 
@@ -101,9 +84,7 @@
 			target="1.7" source="1.7" includeantruntime="false">
 			<classpath refid="compile.classpath" />
 		</javac>
-
 	</target>
-
 
 	<!-- Clean up build system results -->
 	<target name="clean" description="Clean up build system results">
@@ -117,40 +98,31 @@
 		must increase automatically by one and as a result build.number last part 
 		must also increase by one. -->
 
-
 	<target name="dist" description="Creates tesseract.jar">
 		<jar destfile="${build.dir}/jar/tesseract.jar">
 			<fileset dir="${build.dir}/classes" />
 			<fileset dir="${basedir}/lib" />
 			<fileset dir="${basedir}/etc" />
-
-
-
 			<manifest>
 				<attribute name="Main-Class" value="ee.ut.math.tvt.tesseract.Intro" />
 				<attribute name="Class-Path" value="log4j-1.2.17.jar" />
 			</manifest>
 		</jar>
-
 		<copy todir="build/jar">
 			<fileset dir="./lib">
 				<include name="**/*.jar" />
 			</fileset>
 		</copy>
-
 		<propertyfile file="etc/version.properties">
 			<entry key="build.revision.number" type="int" operation="+"
 				value="1" />
 		</propertyfile>
-
 	</target>
 
 	<!-- opens your intro window using the JAR file created by your dist ANT 
 		target -->
 	<target name="jrun" description="Run using tesseract.jar">
-
 		<java jar="${build.dir}/jar/tesseract.jar" fork="yes" />
-
 	</target>
 
 	<!-- on execution it should ask for a commit comment, make a commit to the 
@@ -205,21 +177,17 @@
 		</java>
 	</target>
 
-	<target name="test" depends="build-tests" description="Run the template application">
-
+	<target name="test" depends="build.tests" description="Run the template application">
 		<junit>
-			<classpath refid="test-classpath" />
 			<classpath refid="test.classpath" />
 			<formatter type="brief" usefile="false" />
 			<batchtest>
 				<fileset dir="${build.test.dir}" includes="**/*.class" />
 			</batchtest>
 		</junit>
-
-
 	</target>
 
-	<target name="build-tests" depends="build" description="Build the system">
+	<target name="build.tests" depends="build" description="Build the system">
 		<javac srcdir="${test.dir}" destdir="${build.test.dir}" debug="true"
 			debuglevel="lines,vars,source" encoding="utf-8" compiler="modern"
 			target="1.5" source="1.5" includeantruntime="false">
@@ -229,6 +197,4 @@
 			</classpath>
 		</javac>
 	</target>
-
-
 </project>

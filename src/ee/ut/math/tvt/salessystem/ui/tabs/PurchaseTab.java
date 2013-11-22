@@ -191,7 +191,6 @@ public class PurchaseTab {
 						textField1.setText("0.0");
 					}
 				} catch (NumberFormatException e) {
-					// JOptionPane.showMessageDialog(purchasePane,"Invalid input. Please use numbers only!");
 					log.error(e);
 				}
 			}
