@@ -35,18 +35,6 @@ public class StockItem implements Cloneable, DisplayableItem {
 	@Column(name = "QUANTITY")
 	private int quantity;
 
-	/**
-	 * Constucts new <code>StockItem</code> with the specified values.
-	 * 
-	 * @param id
-	 *            barcode id
-	 * @param name
-	 *            name of the product
-	 * @param desc
-	 *            description of the product
-	 * @param price
-	 *            price of the product
-	 */
 	public StockItem(Long id, String name, String desc, double price) {
 		this.id = id;
 		this.name = name;
@@ -62,18 +50,14 @@ public class StockItem implements Cloneable, DisplayableItem {
 		this.price = price;
 		this.quantity = quantity;
 	}
-	
-	public StockItem(String name, String desc, double price,
-			int quantity) {
+
+	public StockItem(String name, String desc, double price, int quantity) {
 		this.name = name;
 		this.description = desc;
 		this.price = price;
 		this.quantity = quantity;
 	}
 
-	/**
-	 * Constructs new <code>StockItem</code>.
-	 */
 	public StockItem() {
 	}
 

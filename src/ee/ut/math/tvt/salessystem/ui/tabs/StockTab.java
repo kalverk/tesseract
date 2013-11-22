@@ -1,21 +1,16 @@
 package ee.ut.math.tvt.salessystem.ui.tabs;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
-import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
-import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.NoSuchElementException;
 
 import javax.swing.BorderFactory;
@@ -185,7 +180,7 @@ public class StockTab {
 
 	private boolean isThisIdAvailable() {
 		try {
-			StockItem item = model.getWarehouseTableModel().getItemById(
+			model.getWarehouseTableModel().getItemById(
 					(long) (Double.parseDouble(idField.getText())));
 			warningInfo = "This Id is occupied with another product. Try different Id.";
 			return false;

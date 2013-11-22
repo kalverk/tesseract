@@ -6,22 +6,13 @@ import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.VerificationFailedException;
-import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
-import ee.ut.math.tvt.salessystem.ui.model.SalesSystemTableModel;
-import ee.ut.math.tvt.salessystem.ui.model.StockTableModel;
-import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
-import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.NoSuchElementException;
 
 import javax.swing.BorderFactory;
@@ -37,7 +28,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 
 /**
- * Purchase pane + shopping cart tabel UI.
+ * Purchase pane + shopping cart table UI.
  */
 public class PurchaseItemPanel extends JPanel {
 
@@ -127,8 +118,6 @@ public class PurchaseItemPanel extends JPanel {
 		nameField.setEditable(false);
 		priceField.setEditable(false);
 
-		// == Add components to the panel
-
 		// - bar code
 		panel.add(new JLabel("Bar code:"));
 		panel.add(barCodeField);
@@ -183,7 +172,7 @@ public class PurchaseItemPanel extends JPanel {
 
 	// Search the warehouse for a StockItem with the selected item from
 	// nameField
-	private StockItem getStockItemByName() {// muuta
+	private StockItem getStockItemByName() {
 		try {
 			String itemName = (String) nameField.getSelectedItem();
 			if (itemName != null) {
@@ -242,12 +231,12 @@ public class PurchaseItemPanel extends JPanel {
 
 					throw new VerificationFailedException("not enough items");
 				}
-								
-				if(exsistingItem!=null){
+
+				if (exsistingItem != null) {
 					quantity = exsistingItem.getQuantity() + quantity;
-					model.getCurrentPurchaseTableModel().updateItem(exsistingItem, quantity);
-				}
-				else{
+					model.getCurrentPurchaseTableModel().updateItem(
+							exsistingItem, quantity);
+				} else {
 					model.getCurrentPurchaseTableModel().addItem(
 							new SoldItem(stockItem, quantity));
 				}
@@ -264,11 +253,11 @@ public class PurchaseItemPanel extends JPanel {
 			}
 		}
 	}
-	
-	private SoldItem getExsistingItems(StockItem item){
-		try{
+
+	private SoldItem getExsistingItems(StockItem item) {
+		try {
 			return model.getCurrentPurchaseTableModel().getStockItem(item);
-		}catch (NoSuchElementException e){
+		} catch (NoSuchElementException e) {
 			return null;
 		}
 	}
@@ -294,19 +283,6 @@ public class PurchaseItemPanel extends JPanel {
 		quantityField.setText("1");
 
 	}
-
-	/*
-	 * === Ideally, UI's layout and behavior should be kept as separated as
-	 * possible. If you work on the behavior of the application, you don't want
-	 * the layout details to get on your way all the time, and vice versa. This
-	 * separation leads to cleaner, more readable and better maintainable code.
-	 * 
-	 * In a Swing application, the layout is also defined as Java code and this
-	 * separation is more difficult to make. One thing that can still be done is
-	 * moving the layout-defining code out into separate methods, leaving the
-	 * more important methods unburdened of the messy layout code. This is done
-	 * in the following methods.
-	 */
 
 	// Formatting constraints for the dialogPane
 	private GridBagConstraints getDialogPaneConstraints() {

@@ -6,38 +6,28 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.JTableHeader;
-
-import org.apache.log4j.Logger;
 
 import ee.ut.math.tvt.salessystem.domain.data.AcceptOrder;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
-import ee.ut.math.tvt.salessystem.domain.data.StockItem;
-import ee.ut.math.tvt.salessystem.ui.model.PurchaseInfoTableModel;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 /**
- * Encapsulates everything that has to do with the purchase tab (the tab
- * labelled "History" in the menu).
+ * Encapsulates everything that has to do with the purchase tab (the tab labeled
+ * "History" in the menu).
  */
 public class HistoryTab {
 
-	private static final Logger log = Logger
-			.getLogger(PurchaseInfoTableModel.class);
 	private final SalesSystemModel model;
 
 	public HistoryTab(SalesSystemModel model) {
@@ -100,7 +90,7 @@ public class HistoryTab {
 					int row = table.getSelectedRow();
 					AcceptOrder order = model.getHistoryTableModel().getOrder(
 							row);
-					JDialog dialog = populateDetailedInfoWindow(order);
+					populateDetailedInfoWindow(order);
 				}
 			}
 

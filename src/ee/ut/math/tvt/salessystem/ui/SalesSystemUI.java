@@ -1,8 +1,6 @@
 package ee.ut.math.tvt.salessystem.ui;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
-import ee.ut.math.tvt.salessystem.domain.data.AcceptOrder;
-import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import ee.ut.math.tvt.salessystem.ui.tabs.HistoryTab;
 import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
@@ -13,7 +11,6 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
@@ -40,8 +37,6 @@ public class SalesSystemUI extends JFrame {
 	private final Session session;
 
 	private final SalesDomainController domainController;
-
-	private List<AcceptOrder> history;
 
 	// Warehouse model
 	private SalesSystemModel model;
@@ -111,11 +106,9 @@ public class SalesSystemUI extends JFrame {
 
 			@Override
 			public void stateChanged(ChangeEvent e) {
-				// TODO Auto-generated method stub
 				log.debug("Selected tab " + tabbedPane.getSelectedIndex());
 				if (tabbedPane.getSelectedIndex() == 2) {
 					log.info("On historyTab");
-					// DB data on uuendatud ja tuleks uuendada tabelit
 					log.info(domainController.loadHistoryState().size());
 					model.setHistoryTabelModel(domainController
 							.loadHistoryState());

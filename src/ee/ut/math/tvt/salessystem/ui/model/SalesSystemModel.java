@@ -2,8 +2,6 @@ package ee.ut.math.tvt.salessystem.ui.model;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
 import ee.ut.math.tvt.salessystem.domain.data.AcceptOrder;
 
@@ -11,8 +9,6 @@ import ee.ut.math.tvt.salessystem.domain.data.AcceptOrder;
  * Main model. Holds all the other models.
  */
 public class SalesSystemModel {
-
-	private static final Logger log = Logger.getLogger(SalesSystemModel.class);
 
 	// Warehouse model
 	private StockTableModel warehouseTableModel;

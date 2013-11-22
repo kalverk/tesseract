@@ -5,13 +5,8 @@ package ee.ut.math.tvt.salessystem.domain.data;
  * entities.
  */
 public interface DisplayableItem {
-	/**
-	 * Id of entity.
-	 */
+
 	public Long getId();
-	
-	/**
-	 * Name of entity.
-	 */
+
 	public String getName();
 }

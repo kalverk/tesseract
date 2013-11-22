@@ -25,20 +25,19 @@ public class Intro {
 			cui.run();
 		} else {
 
-			IntroUI introUI = new IntroUI();
-			introUI.raam.setVisible(true);
-			introUI.raam.setAlwaysOnTop(true);
+			IntroUI.raam.setVisible(true);
+			IntroUI.raam.setAlwaysOnTop(true);
 
 			final SalesSystemUI ui = new SalesSystemUI(domainController);
 			ui.setVisible(true);
 
-			introUI.raam.setAlwaysOnTop(false);
+			IntroUI.raam.setAlwaysOnTop(false);
 			try {
 				Thread.sleep(3000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-			introUI.raam.setVisible(false);
+			IntroUI.raam.setVisible(false);
 		}
 
 	}

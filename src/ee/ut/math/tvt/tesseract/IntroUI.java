@@ -24,9 +24,9 @@ public class IntroUI {
 		Properties ver = new Properties();
 		Properties props = new Properties();
 
-		FileInputStream fi1=null;
-		FileInputStream fi2=null;
-		FileInputStream fi3=null;
+		FileInputStream fi1 = null;
+		FileInputStream fi2 = null;
+		FileInputStream fi3 = null;
 
 		try {
 			fi1 = new FileInputStream("etc/application.properties");
@@ -38,14 +38,12 @@ public class IntroUI {
 
 		} catch (IOException ex) {
 			log.error(ex);
-		}
-		finally{
-			try{
+		} finally {
+			try {
 				fi1.close();
 				fi2.close();
 				fi3.close();
-			}
-			catch(Exception e){
+			} catch (Exception e) {
 				log.error(e);
 			}
 		}

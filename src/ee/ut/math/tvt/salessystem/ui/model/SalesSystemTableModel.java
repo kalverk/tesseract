@@ -24,14 +24,6 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
 		rows = new ArrayList<T>();
 	}
 
-	/**
-	 * @param item
-	 *            item describing selected row
-	 * @param columnIndex
-	 *            selected column index
-	 * 
-	 * @return value displayed in column with specified index
-	 */
 	protected abstract Object getColumnValue(T item, int columnIndex);
 
 	public int getColumnCount() {
@@ -51,7 +43,6 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
 		return getColumnValue(rows.get(rowIndex), columnIndex);
 	}
 
-	// search for item with the specified id
 	public T getItemById(final long id) {
 		for (final T item : rows) {
 			if (item.getId() == id)
@@ -59,7 +50,7 @@ public abstract class SalesSystemTableModel<T extends DisplayableItem> extends
 		}
 		throw new NoSuchElementException();
 	}
-	
+
 	public T getItemByName(final String name) {
 		for (final T item : rows) {
 			if (item.getName() == name)

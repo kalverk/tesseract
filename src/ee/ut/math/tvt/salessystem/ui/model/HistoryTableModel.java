@@ -1,12 +1,8 @@
 package ee.ut.math.tvt.salessystem.ui.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import ee.ut.math.tvt.salessystem.domain.data.AcceptOrder;
-import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.service.HibernateDataService;
 
 /**
@@ -14,8 +10,6 @@ import ee.ut.math.tvt.salessystem.service.HibernateDataService;
  */
 public class HistoryTableModel extends SalesSystemTableModel<AcceptOrder> {
 	private static final long serialVersionUID = 1L;
-
-	private static final Logger log = Logger.getLogger(StockTableModel.class);
 
 	HibernateDataService service = new HibernateDataService();
 
