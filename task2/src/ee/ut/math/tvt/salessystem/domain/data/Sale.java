@@ -1,9 +1,11 @@
 package ee.ut.math.tvt.salessystem.domain.data;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -35,6 +37,7 @@ public class Sale implements DisplayableItem {
 
 	/** Empty constructors are used by hibernate */
 	public Sale() {
+		this.soldItems = new HashSet<SoldItem>();
 	}
 
 	public Sale(List<SoldItem> goods) {// remove later probaly
