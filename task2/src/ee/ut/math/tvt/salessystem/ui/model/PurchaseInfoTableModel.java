@@ -99,7 +99,7 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 		} else {
 			validateQuantityInStock(soldItem.getStockItem(),
 					soldItem.getQuantity());
-			getTableRows().add(soldItem);
+			this.sale.addSoldItem(soldItem);
 			log.debug("Added " + soldItem.getName() + " quantity of "
 					+ soldItem.getQuantity());
 		}
@@ -153,7 +153,8 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
 	}
 
 	public void clear() {
-		getTableRows().clear();
+		sale.getSoldItems().clear();
+		fireTableDataChanged();
 	}
 
 }

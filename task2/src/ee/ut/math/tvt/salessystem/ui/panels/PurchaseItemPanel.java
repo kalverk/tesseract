@@ -187,10 +187,7 @@ public class PurchaseItemPanel extends JPanel {
 			// If there is not enough stock left in the warehouse to add this
 			// quantity..
 			try {
-				SoldItem soldItem = new SoldItem(stockItem, quantity);
-				model.getCurrentPurchaseTableModel().addItem(soldItem);
-				PurchaseTab.sale.addSoldItem(soldItem); // sale.addItem(stockitem)
-														// oli kirjas
+				model.getCurrentPurchaseTableModel().addItem(new SoldItem(stockItem, quantity));
 			} catch (SalesSystemException e) {
 				showNotEnoughInStockWarning();
 			}
@@ -232,7 +229,6 @@ public class PurchaseItemPanel extends JPanel {
 		}
 		barCodeField.setText("");
 		quantityField.setText("1");
-		// nameField.setText("");
 		priceField.setText("");
 	}
 
