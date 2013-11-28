@@ -4,7 +4,10 @@ import ee.ut.math.tvt.salessystem.domain.data.Sale;
 import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.SalesSystemException;
+
 import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -137,5 +140,11 @@ public class PurchaseInfoTableModel extends SalesSystemTableModel<SoldItem> {
         this.rows = new ArrayList<SoldItem>(sale.getSoldItems());
         fireTableDataChanged();
     }
+
+	@Override
+	public List<SoldItem> getTableRows() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
