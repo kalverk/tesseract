@@ -1,8 +1,26 @@
-2013-11-28 13:22:34,263 [main] DEBUG - Strating SalesSystem with the Swing UI ..
-2013-11-28 13:22:34,509 [main] INFO - 5 items loaded from disk
-2013-11-28 13:22:34,517 [main] INFO - 1 clients loaded from disk
-2013-11-28 13:22:34,541 [main] INFO - 7 Sales loaded from disk
-2013-11-28 13:22:34,720 [main] INFO - 5 items loaded from disk
-2013-11-28 13:22:34,726 [main] INFO - 7 Sales loaded from disk
-2013-11-28 13:22:34,734 [main] INFO - 1 clients loaded from disk
-2013-11-28 13:22:34,818 [main] INFO - SalesSystem started
+2013-11-28 20:37:20,649 [main] DEBUG - Strating SalesSystem with the Swing UI ..
+2013-11-28 20:37:20,964 [main] INFO - SalesSystem started
+2013-11-28 20:37:22,575 [AWT-EventQueue-0] INFO - 5 items loaded from disk
+2013-11-28 20:37:23,080 [AWT-EventQueue-0] INFO - 17 Sales loaded from disk
+2013-11-28 20:37:26,670 [AWT-EventQueue-0] INFO - 1 clients loaded from disk
+2013-11-28 20:37:27,072 [AWT-EventQueue-0] INFO - 17 Sales loaded from disk
+2013-11-28 20:37:27,498 [AWT-EventQueue-0] INFO - 5 items loaded from disk
+2013-11-28 20:37:30,356 [AWT-EventQueue-0] INFO - New sale process started
+2013-11-28 20:37:30,356 [AWT-EventQueue-0] INFO - New purchase started
+2013-11-28 20:37:30,360 [AWT-EventQueue-0] INFO - 1 clients loaded from disk
+2013-11-28 20:37:31,307 [AWT-EventQueue-0] INFO - Client Toomas with ID=1 got selected.
+2013-11-28 20:37:33,919 [AWT-EventQueue-0] DEBUG - Added Layz krõpsud quantity of 10
+2013-11-28 20:37:39,905 [AWT-EventQueue-0] INFO - Sale complete
+2013-11-28 20:37:39,905 [AWT-EventQueue-0] DEBUG - Contents of the current basket:
+Id	Name	Price	Quantity	Sum	
+null	Layz krõpsud	10.5	10	105.0	
+
+2013-11-28 20:37:42,829 [AWT-EventQueue-0] INFO - 5 items loaded from disk
+2013-11-28 20:37:49,344 [AWT-EventQueue-0] INFO - 5 items loaded from disk
+2013-11-28 20:37:50,198 [AWT-EventQueue-0] INFO - 18 Sales loaded from disk
+2013-11-28 20:37:54,591 [AWT-EventQueue-0] INFO - 1 clients loaded from disk
+2013-11-28 20:37:54,979 [AWT-EventQueue-0] INFO - 18 Sales loaded from disk
+2013-11-28 20:37:57,432 [AWT-EventQueue-0] INFO - 5 items loaded from disk
+2013-11-28 20:38:29,199 [AWT-EventQueue-0] INFO - 18 Sales loaded from disk
+2013-11-28 20:38:38,911 [AWT-EventQueue-0] INFO - 1 clients loaded from disk
+2013-11-28 20:38:39,386 [AWT-EventQueue-0] INFO - 18 Sales loaded from disk

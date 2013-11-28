@@ -10,7 +10,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -40,6 +39,7 @@ public class StockTab {
     
     public void refresh(){
     	model.getWarehouseTableModel().populateWithData(controller.getAllStockItems());
+    	model.getWarehouseTableModel().fireTableDataChanged();
     }
 
     // warehouse stock tab - consists of a menu and a table
@@ -96,7 +96,6 @@ public class StockTab {
     private Component drawStockMainPane() {
         JPanel panel = new JPanel();
 
-        refresh();
         JTable table = new JTable(model.getWarehouseTableModel());
 
         JTableHeader header = table.getTableHeader();

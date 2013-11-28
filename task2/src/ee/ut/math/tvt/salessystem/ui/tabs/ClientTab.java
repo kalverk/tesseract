@@ -3,7 +3,6 @@ package ee.ut.math.tvt.salessystem.ui.tabs;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -11,7 +10,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
 import ee.ut.math.tvt.salessystem.domain.controller.SalesDomainController;
-import ee.ut.math.tvt.salessystem.domain.data.Client;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 
 public class ClientTab {
@@ -30,6 +28,7 @@ public class ClientTab {
 
 	public void refresh() {
 		model.getClientTableModel().populateWithData(controller.getAllClients());
+		model.getClientTableModel().fireTableDataChanged();
 	}
 
 	public Component draw() {
@@ -47,7 +46,6 @@ public class ClientTab {
 	private Component drawClientsTable() {
 
 		// Create the table
-		refresh();
 		JTable table = new JTable(model.getClientTableModel());
 		table.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane = new JScrollPane(table);

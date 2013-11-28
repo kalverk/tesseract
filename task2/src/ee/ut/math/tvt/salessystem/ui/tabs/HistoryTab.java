@@ -8,7 +8,6 @@ import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -37,6 +36,7 @@ public class HistoryTab {
 
 	public void refresh() {
 		model.getPurchaseHistoryTableModel().populateWithData(controller.getAllSales());
+		model.getPurchaseHistoryTableModel().fireTableDataChanged();
 	}
 
 	/**
@@ -57,7 +57,6 @@ public class HistoryTab {
 
 	private Component drawHistoryGeneralTable() {
 
-		refresh();
 		JTable table = new JTable(model.getPurchaseHistoryTableModel());
 		table.getTableHeader().setReorderingAllowed(false);
 		JScrollPane scrollPane = new JScrollPane(table);
