@@ -18,116 +18,102 @@ import org.hibernate.Transaction;
  */
 public class SalesDomainControllerImpl implements SalesDomainController {
 
-    private static final Logger log = Logger.getLogger(SalesDomainControllerImpl.class);
+	private static final Logger log = Logger
+			.getLogger(SalesDomainControllerImpl.class);
 
-    private SalesSystemModel model;
+	private SalesSystemModel model;
 
-    private Session session = HibernateUtil.currentSession();
+	private Session session = HibernateUtil.currentSession();
 
-    @SuppressWarnings("unchecked")
-    public List<StockItem> getAllStockItems() {
-        List<StockItem> result =
-            session
-                .createQuery("from StockItem")
-                .list();
+	@SuppressWarnings("unchecked")
+	public List<StockItem> getAllStockItems() {
+		List<StockItem> result = session.createQuery("from StockItem").list();
 
-        log.info(result.size() + " items loaded from disk");
+		log.info(result.size() + " items loaded from disk");
 
-        return result;
-    }
+		return result;
+	}
 
-    @SuppressWarnings("unchecked")
-    public List<Sale> getAllSales() {
-        List<Sale> result = session.createQuery("from Sale").list();
-        log.info(result.size() + " Sales loaded from disk");
+	@SuppressWarnings("unchecked")
+	public List<Sale> getAllSales() {
+		List<Sale> result = session.createQuery("from Sale").list();
+		log.info(result.size() + " Sales loaded from disk");
 
-        return result;
-    }
+		return result;
+	}
 
+	@SuppressWarnings("unchecked")
+	public List<Client> getAllClients() {
+		List<Client> clients = session.createQuery("from Client").list();
 
-    @SuppressWarnings("unchecked")
-    public List<Client> getAllClients() {
-        List<Client> clients =
-            session.createQuery("from Client").list();
+		log.info(clients.size() + " clients loaded from disk");
 
-        log.info(clients.size() + " clients loaded from disk");
+		return clients;
+	}
 
-        return clients;
-    }
+	public Client getClient(long id) {
+		return (Client) session.get(Client.class, id);
+	}
 
-    public Client getClient(long id) {
-        return (Client) session.get(Client.class, id);
-    }
+	private StockItem getStockItem(long id) {
+		return (StockItem) session.get(StockItem.class, id);
+	}
 
+	public void registerSale(Sale sale) {
 
-    private StockItem getStockItem(long id) {
-        return (StockItem) session.get(StockItem.class, id);
-    }
+		// Begin transaction
+		Transaction tx = session.beginTransaction();
 
+		// sale.setId(null);
+		sale.setSellingTime(new Date());
 
-    public void registerSale(Sale sale) {
+		// Reduce quantities of stockItems in warehouse
+		for (SoldItem item : sale.getSoldItems()) {
+			// Associate with current sale
+			item.setSale(sale);
 
-        // Begin transaction
-        Transaction tx = session.beginTransaction();
+			StockItem stockItem = getStockItem(item.getStockItem().getId());
+			stockItem.setQuantity(stockItem.getQuantity() - item.getQuantity());
+			session.save(stockItem);
+		}
 
-        //sale.setId(null);
-        sale.setSellingTime(new Date());
+		session.save(sale);
 
+		// end transaction
+		tx.commit();
 
-        // Reduce quantities of stockItems in warehouse
-        for (SoldItem item : sale.getSoldItems()) {
-            // Associate with current sale
-            item.setSale(sale);
+	}
 
-            StockItem stockItem = getStockItem(item.getStockItem().getId());
-            stockItem.setQuantity(stockItem.getQuantity() - item.getQuantity());
-            session.save(stockItem);
-        }
+	public void createStockItem(StockItem stockItem) {
+		// Begin transaction
+		Transaction tx = session.beginTransaction();
+		session.save(stockItem);
+		tx.commit();
+		model.getWarehouseTableModel().addRow(stockItem);
+		log.info("Added new stockItem : " + stockItem);
+	}
 
-        session.save(sale);
+	public void cancelCurrentPurchase() {
+		// XXX - Cancel current purchase
+		log.info("Current purchase canceled");
+	}
 
-        // end transaction
-        tx.commit();
+	public void startNewPurchase() {
+		// XXX - Start new purchase
+		log.info("New purchase started");
+	}
 
-        //model.getPurchaseHistoryTableModel().addRow(sale); prooviks
+	public void setModel(SalesSystemModel model) {
+		this.model = model;
+	}
 
-    }
+	public Sale getSale(Long id) {
+		return (Sale) session.get(Sale.class, id);
+	}
 
-
-    public void createStockItem(StockItem stockItem) {
-        // Begin transaction
-        Transaction tx = session.beginTransaction();
-        session.save(stockItem);
-        tx.commit();
-        model.getWarehouseTableModel().addRow(stockItem);
-        log.info("Added new stockItem : " + stockItem);
-    }
-
-
-    public void cancelCurrentPurchase() {
-        // XXX - Cancel current purchase
-        log.info("Current purchase canceled");
-    }
-
-    public void startNewPurchase() {
-        // XXX - Start new purchase
-        log.info("New purchase started");
-    }
-
-
-
-    public void setModel(SalesSystemModel model) {
-        this.model = model;
-    }
-
-
-    public Sale getSale(Long id) {
-        return (Sale) session.get(Sale.class, id);
-    }
-
-    @Override
-    public void endSession() {
-        HibernateUtil.closeSession();
-    }
+	@Override
+	public void endSession() {
+		HibernateUtil.closeSession();
+	}
 
 }

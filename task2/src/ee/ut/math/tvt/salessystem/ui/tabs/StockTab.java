@@ -39,8 +39,7 @@ public class StockTab {
     }
     
     public void refresh(){
-    	List<StockItem> stockItems = controller.getAllStockItems();
-    	model.getWarehouseTableModel().populateWithData(stockItems);
+    	model.getWarehouseTableModel().populateWithData(controller.getAllStockItems());
     }
 
     // warehouse stock tab - consists of a menu and a table

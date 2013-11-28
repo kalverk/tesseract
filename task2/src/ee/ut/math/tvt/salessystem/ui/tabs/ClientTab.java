@@ -29,8 +29,7 @@ public class ClientTab {
 	 */
 
 	public void refresh() {
-		List<Client> clients = controller.getAllClients();
-		model.getClientTableModel().populateWithData(clients);
+		model.getClientTableModel().populateWithData(controller.getAllClients());
 	}
 
 	public Component draw() {

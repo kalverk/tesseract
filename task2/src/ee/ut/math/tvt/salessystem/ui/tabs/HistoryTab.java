@@ -36,8 +36,7 @@ public class HistoryTab {
 	}
 
 	public void refresh() {
-		List<Sale> sales = controller.getAllSales();
-		model.getPurchaseHistoryTableModel().populateWithData(sales);
+		model.getPurchaseHistoryTableModel().populateWithData(controller.getAllSales());
 	}
 
 	/**

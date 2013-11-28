@@ -47,7 +47,6 @@ public class PurchaseTab {
 
 	private JFrame parent;
 
-	private Client client;
 	public static Sale sale;
 
 	public PurchaseTab(SalesDomainController controller,
@@ -195,7 +194,7 @@ public class PurchaseTab {
 		purchasePane.reset();
 
 		showSelectClientDialog();
-		client = model.getSelectedClient();
+		Client client = model.getSelectedClient();
 		sale = new Sale(client);
 
 		purchasePane.setEnabled(true);

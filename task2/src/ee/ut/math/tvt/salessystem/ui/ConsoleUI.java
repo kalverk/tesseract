@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -128,14 +129,14 @@ public class ConsoleUI {
 				System.out.println("You must select a client first!");
 				return;
 			}
-			// try {
-			List<SoldItem> soldItems = new ArrayList<SoldItem>();
-			for (StockItem stockItem : cart) {
-				soldItems.add(new SoldItem(stockItem, stockItem.getQuantity()));
-			}
 			try {
-				Sale sale = new Sale(soldItems);
-				sale.setClient(selectedClient);
+				List<SoldItem> soldItems = new ArrayList<SoldItem>();
+				for (StockItem stockItem : cart) {
+					soldItems.add(new SoldItem(stockItem, stockItem
+							.getQuantity()));
+				}
+				Sale sale = new Sale(selectedClient);
+				sale.setSoldItems(new HashSet<SoldItem>(soldItems));
 				dc.registerSale(sale);
 				cart.clear();
 			} catch (VerificationFailedException e) {
