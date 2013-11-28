@@ -4,6 +4,7 @@ import ee.ut.math.tvt.salessystem.domain.data.SoldItem;
 import ee.ut.math.tvt.salessystem.domain.data.StockItem;
 import ee.ut.math.tvt.salessystem.domain.exception.SalesSystemException;
 import ee.ut.math.tvt.salessystem.ui.model.SalesSystemModel;
+import ee.ut.math.tvt.salessystem.ui.tabs.PurchaseTab;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -186,7 +187,9 @@ public class PurchaseItemPanel extends JPanel {
 			// If there is not enough stock left in the warehouse to add this
 			// quantity..
 			try {
-				model.getCurrentPurchaseTableModel().addItem(new SoldItem(stockItem, quantity));
+				SoldItem soldItem = new SoldItem(stockItem, quantity);
+				 model.getCurrentPurchaseTableModel().addItem(soldItem);
+				 PurchaseTab.sale.addSoldItem(soldItem);
 			} catch (SalesSystemException e) {
 				showNotEnoughInStockWarning();
 			}
